@@ -1,59 +1,47 @@
-# 什么是 VS Code Copilot
+# 概览与安装
 
-## 一句话解释
+## 本章解决什么
+本章说明如何在 Visual Studio Code 中开始使用 Copilot（包含 GitHub Copilot 提供的 AI 功能），涵盖账号与订阅、组织策略影响、安装/启用流程，以及如何验证内联建议（Inline Suggestions）、聊天视图（Chat View）与 Agent 能否使用。提供故障排查指引并指向第 07 章的详细排错与安全检查。
 
-VS Code Copilot 是内置在 Visual Studio Code 编辑器中的 AI 编程助手，由 GitHub Copilot 和大语言模型（LLM）驱动。你用自然语言描述需求，它帮你写代码、改代码、查问题。
+## Copilot 能做什么
+- 内联补全（Inline Suggestions）：在编辑器中基于上下文给出实时补全建议，按 `Tab` 接受。
+- 聊天视图（Chat View / Chat）：在侧边栏以对话方式提问、让 AI 解释或修改代码。
+- 内联聊天（Inline Chat）：针对选中代码在编辑器中就地发起对话并应用修改。
+- Agents（在 VS Code 文档中称为 Agents Window，注意目前为 Preview）：用于更高自主性的多步、多文件任务编排与工具调用（例如运行命令、读取/修改多个文件）。
+- Quick Chat：轻量化临时对话入口，适合快速查询。
 
-## 它能做什么
+这些功能由 VS Code 与 GitHub 的服务与模型能力共同提供；编辑器本身也包含用于触发和呈现这些交互的本地 UI。请始终审查 AI 生成的更改。
 
-- **写代码时**：自动给出补全建议（灰色虚文），按 Tab 接受
-- **提问时**：用自然语言对话，解释代码、回答技术问题
-- **改代码时**：直接告诉它你要改什么，它帮你改
-- **做任务时**：Agent 模式可以自主规划、多文件修改、运行命令、自我纠错，直到任务完成
+## Copilot 不能替你做什么
+- 替代你的专业判断或对生成代码的安全性承担责任。
+- 在未经校验的场景下自动发布或替你决定架构选择。
 
-关键认知：Copilot 不是一个简单的自动补全工具，它是一个 **AI 结对编程伙伴**。你描述意图，它负责实现，你负责审查。
-
-## AI 在 VS Code 中的五个层次
-
-从自主程度最低到最高：
-
-| 层次 | 名称 | 自主程度 | 适用场景 |
-|------|------|---------|---------|
-| 1 | Inline Suggestions（内联补全） | 最低，你打字它建议 | 逐行编码时的实时补全 |
-| 2 | Inline Chat（内联聊天） | 低，你指挥它改 | 针对当前代码的快速修改 |
-| 3 | Chat / Ask（聊天/提问） | 中，对话式 | 提问、探索、理解代码 |
-| 4 | Agent（智能体） | 高，自主完成 | 多文件功能开发、调试、重构 |
-| 5 | Plan（规划） | 辅助，先规划后执行 | 复杂任务的方案设计 |
+## 账号、订阅与组织策略
+- 登录（GitHub sign-in）会将你的编辑器与 GitHub 帐号关联，GitHub 账号可启用免费额度或付费 Copilot 计划（具体套餐、价格与配额以 GitHub 官方说明为准）。
+- 组织（Organization）策略或管理员设置可能会禁用或限制某些 AI 功能或 Agents。若在企业环境中无法使用某些功能，请联系组织管理员。
+- BYOK（Bring Your Own Key）/自带模型密钥是将特定语言模型或模型提供商接入编辑器的一种方式，它与获取 GitHub Copilot 服务（由 GitHub 提供的托管计划）不是同一件事：BYOK 是连接模型的方式，而 Copilot 服务是包含授权、计量和产品集成的服务。
 
 ## 安装与启用
+1. 安装或更新到最新稳定版的 Visual Studio Code（参见 VS Code 官方下载页面）。
+2. 在编辑器内通过扩展视图或内置提示安装或启用 Copilot / AI 功能扩展（以编辑器中显示的官方扩展名称为准）。
+3. 使用 GitHub 账号登录（Sign in with GitHub）并完成授权；若订阅生效，相关付费或免费额度将关联到你的账号。
+4. 在组织环境中，如被策略限制，请向管理员确认是否需要例外或配置更改。
 
-### 前提条件
+## 验证是否可用
+- 内联建议：在打开的代码文件中输入几行代码，观察是否出现灰色补全（Inline Suggestions）；尝试按 `Tab` 接受。
+- Chat View：运行命令面板中的 `Chat: Open Chat`（或编辑器侧边栏的 Chat 图标），确认可发送并收到响应。
+-- Agent 可用性：在命令面板中查找 `Chat: Open Agents Window`（文档可能标注为 Preview）或搜索 `Agents`；若命令或窗口不可见，说明组织策略或当前扩展版本未启用该预览功能。
 
-- 安装 VS Code（从 https://code.visualstudio.com/download 下载）
-- 拥有 GitHub 账号
-- Copilot 订阅（免费计划包含每月限额，或付费 Copilot Pro/Pro+ 计划）
+若上述任何一步失败，请参见第 07 章“故障排查与安全”获取详细的诊断步骤（包括日志位置、权限与网络设置）。
 
-### 启用步骤
+## 下一步
+- 继续下一章了解聊天与内联交互：[聊天与内联交互](02-chat-and-inline.md)
 
-1. 打开 VS Code
-2. 点击标题栏的 **Sign In** 按钮，或悬停状态栏的 Copilot 图标，选择 **Enable AI features**
-3. 用 GitHub 账号登录并授权
-4. 如果没有订阅，会自动注册免费计划（含每月限额的补全和聊天次数）
-
-> 也可以不绑定 GitHub 账号，使用自己的 API Key（BYOK），连接任意模型提供商。详见 [05-进阶定制](05-advanced-customization.md) 中的 BYOK 部分。
-
-### 验证是否生效
-
-- 状态栏出现 Copilot 图标
-- 在编辑器中输入代码，应出现灰色补全建议
-- 按 Ctrl+Alt+I（Mac: ⌃⌘I）打开 Chat 面板
-
-## Copilot 适合做什么 / 不适合做什么
-
-**适合**：编写测试和重复性代码、调试和纠正语法错误、解释和注释代码、生成正则表达式、从行内注释生成代码、为 TDD 生成测试
-
-**不适合**：回答与编程/技术无关的问题、替代你的专业判断。它是一个可能犯错的工具，你应始终验证它建议的代码。
+## 官方参考
+- [VS Code Agents 概览（官方文档，Agents / Agents Window 概述）](https://code.visualstudio.com/docs/agents/overview)
+- [VS Code AI 与 Language Models 设置（官方文档，包含 BYOK/模型接入说明）](https://code.visualstudio.com/docs/agent-customization/language-models)
+- [GitHub Copilot 文档（Copilot 说明与订阅入口）](https://docs.github.com/en/copilot)
 
 ---
 
-下一节：[基础使用 →](02-basic-usage.md)
+返回主页：[章节简介](README.md) ｜ 下一章：[聊天与内联交互](02-chat-and-inline.md)
