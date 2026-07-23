@@ -49,7 +49,7 @@ git branch checkpoint/pre-<task>
 
 ## 权限与工具最小化
 
-- 最小权限原则：Agent 和工具默认只启用只读或审查模式，写/执行权限仅在明确批准后临时放开。 
+- 最小权限原则：Agent 和工具默认只启用只读或审查模式，写/执行权限仅在明确批准后临时放开。
 - 计划阶段使用只读权限与模拟（dry-run）；当需要写时，弹出明确批准请求。
 - 对外网络、文件系统、shell 的访问使用沙箱/白名单，限制域名与路径。
 
@@ -64,7 +64,7 @@ git branch checkpoint/pre-<task>
 ## 回滚与恢复
 
 - 保留明确的 Keep/Undo 语义：
-  - Stage/Accept（暂存或接受）意味着你已审查并打算将改动纳入历史。 
+  - Stage/Accept（暂存或接受）意味着你已审查并打算将改动纳入历史。
   - Discard（放弃）会移除未保存的编辑或临时补丁。
 - 检查点不是提交：显式检查点（IDE 的检查点/快照）便于临时恢复，但不能替代 Git 提交或分支保护。请在关键步骤前用 `git commit` 或新分支保存状态。
 - 验证状态再做破坏性回滚：在执行 `git reset --hard`、`git checkout --force` 或远程回滚前，先运行 `git status`, `git log --oneline -n 5`，并确认远程/同事同步策略。
@@ -105,11 +105,11 @@ git log --oneline -n 5
 
 ## 官方参考
 
-- GitHub Copilot 文档：[docs/01-copilot/06-mcp-and-external-tools.md](docs/01-copilot/06-mcp-and-external-tools.md)
+- VS Code Agent 安全与控制：[MCP 与工具](06-mcp-and-tools.md)
 - GitHub Copilot 概览（官方）：https://docs.github.com/en/copilot
 - GitHub 代码安全指南（官方）：https://docs.github.com/en/code-security
 - GitHub Security Lab（官方研究与教程）：https://securitylab.github.com/
 
 ---
 
-← 上一节：[MCP 外部工具](06-mcp-and-external-tools.md) ｜ [返回本期首页](README.md)
+← 上一节：[MCP 与工具](06-mcp-and-tools.md) ｜ [返回本期首页](README.md)

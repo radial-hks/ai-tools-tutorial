@@ -1,55 +1,50 @@
 # 术语表
 
-> 跨工具共享的 AI 概念速查。每次新增工具文档时，如果涉及新术语，在此补充。
+> 跨工具共享的 AI 概念速查。正文负责完整说明，术语表只给最短定义。
 
 ## 通用术语
 
-| 术语 | 解释（给小白） | 比喻 |
-|------|---------------|------|
-| **LLM** | 大语言模型，AI 的大脑 | 像 AI 的"知识库+推理引擎" |
-| **Prompt** | 你对 AI 说的那句话 | 像点菜——说越清楚，上菜越对 |
-| **Context（上下文）** | AI 需要知道的背景信息 | 像你让同事帮忙，得告诉他是哪个文件 |
-| **Token** | AI 处理文本的最小单位，影响消耗和费用 | 像字数计费——越长越贵 |
-| **Agent（智能体）** | 能自主完成多步任务的 AI | 像实习生——你说任务，他自己搞定 |
-| **Inline（内联）** | 就在当前编辑位置弹出 | 像在代码中间直接对话 |
-| **Diff** | 代码改动的对比视图 | 红色删的、绿色加的，和 Git diff 一样 |
+| 术语 | 解释 |
+|------|------|
+| LLM | 大语言模型，负责理解和生成文本、代码或多模态内容。 |
+| Prompt | 你发给 AI 的请求，应包含目标、上下文、约束和验收。 |
+| Context（上下文） | AI 处理请求时可见的文件、选区、终端输出、图片或外部资料。 |
+| Token | 模型处理文本的计量单位，影响上下文容量、速度和费用。 |
+| Agent（智能体） | 能围绕任务使用工具、读取上下文并多步推进的 AI 工作方式。 |
+| Diff | 文件修改前后的对比，用于审查和回滚。 |
 
 ## VS Code Copilot 术语
 
 | 术语 | 解释 |
 |------|------|
-| **Inline Suggestions** | 打字时出现的灰色补全建议，Tab 接受 |
-| **Chat View** | 侧边栏的聊天面板 |
-| **Agents Window** | 独立的智能体窗口，跨项目 |
-| **Inline Chat** | 在编辑器代码中间弹出的聊天框 |
-| **Quick Chat** | 顶部的轻量聊天面板 |
-| **Ask / Agent / Plan** | 三种内置 Agent 模式：只读问答 / 可编辑 / 先规划 |
-| **Checkpoints** | 聊天过程中的文件快照，可回滚 |
+| Inline Suggestions | 编辑器中随输入出现的灰色补全建议。 |
+| Chat View | VS Code 侧边栏中的代码优先聊天界面。 |
+| Agents Window | 面向多任务编排的独立 Agent 窗口，状态以当前 VS Code 版本为准。 |
+| Inline Chat | 在编辑器或终端当前位置发起的就地聊天。 |
+| Quick Chat | 顶部轻量聊天面板，适合临时问题。 |
+| Agent type / 运行位置 | Agent 在哪里运行，例如本地、Copilot CLI、Cloud Agent 或第三方提供者。 |
+| Agent role / 角色 | Agent 如何行动，例如 Agent、Plan、Ask 或 Custom Agent。 |
+| Permission level | 当前会话允许 AI 使用工具、编辑文件或运行命令的自主程度。 |
+| Checkpoints | 聊天编辑过程中的快照，可辅助回退，但不能替代 Git 提交。 |
 
 ## VS Code Copilot 定制术语
 
-| 术语 | 解释 | 文件格式 |
-|------|------|---------|
-| **Instructions** | 项目编码规范，永远生效 | `.github/copilot-instructions.md` |
-| **Prompt Files** | 可复用任务模板，用 `/命令` 调用 | `.github/prompts/*.prompt.md` |
-| **Custom Agents** | 专属角色（安全审查员、测试专家等） | `.github/agents/*.agent.md` |
-| **Agent Skills** | 能力包，含脚本/模板 | `.github/skills/<name>/SKILL.md` |
-| **Hooks** | 生命周期自动化（格式化、阻止危险命令等） | `.github/hooks/*.json` |
-| **Plugins** | 打包分发以上所有 | `plugin.json` |
-| **MCP** | 让 AI 连接外部工具（浏览器、数据库等） | `.vscode/mcp.json` |
-| **BYOK** | 自带 API Key，不绑定 GitHub 账号 | `chatLanguageModels.json` |
+| 术语 | 解释 | 常见位置 |
+|------|------|----------|
+| Instructions | 项目或文件范围内的规则与约定，Chat / Agent 会按适用范围加载。 | `.github/copilot-instructions.md`, `.github/instructions/*.instructions.md` |
+| Prompt Files | 可手动调用的复用 Prompt。 | `.github/prompts/*.prompt.md` |
+| Agent Skills | 可复用能力包，可包含流程、脚本、模板和资源。 | `.github/skills/<name>/SKILL.md` |
+| Custom Agents | 自定义角色、指令、工具、模型和交接动作。 | `.github/agents/*.agent.md` |
+| Hooks | Agent 生命周期中的确定性命令，通常用于审计、格式化或阻断危险操作。 | `.github/hooks/*.json` |
+| Agent Plugins（Preview） | 打包分发 Skills、Agents、Hooks、MCP 配置等定制内容。 | `plugin.json` |
+| MCP | Model Context Protocol，用于把外部工具、资源、Prompt 或 App 暴露给 AI。 | `.vscode/mcp.json` |
+| MCP Resources | MCP Server 提供的只读上下文资源。 | Server 定义 |
+| MCP Apps | MCP Server 提供的交互式 UI 组件。 | Server 定义 |
+| BYOK | Bring Your Own Key，用自己的模型凭证接入语言模型；不等同于获得 GitHub Copilot 服务。 | 语言模型配置 |
 
-## Hermes 术语（后续）
-
-| 术语 | 解释 |
-|------|------|
-| **Hermes** | Nous Research 的 AI Agent 平台 |
-| **Skill** | Hermes 的可复用工作流文件 |
-| **Memory** | Hermes 的跨会话持久记忆 |
-
-## Pi / OMP 术语（后续）
+## 后续工具术语
 
 | 术语 | 解释 |
 |------|------|
-| **Pi** | Nous Research 的模型调度器 |
-| **OMP** | Open Model Platform |
+| Hermes | 后续规划中的 Agent 平台主题。 |
+| Pi / OMP | 后续规划中的模型调度与平台主题。 |
