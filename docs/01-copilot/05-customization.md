@@ -1,285 +1,131 @@
-# 进阶定制：让 Copilot 懂你的项目
+# 定制 Copilot
 
-这一节是 "进阶" 部分。以下功能让 Copilot 了解你的项目规范、自动化重复任务。
+本章解决什么：团队如何分层、命名并存放 VS Code 的 AI 定制资源（指令、提示、技能、智能体、钩子、插件），并给出最小可用示例与限制说明（基于 2026-07 官方文档）。
 
-## 定制功能总览
+决策矩阵（快速判定）：
+- 每次请求自动应用、用于项目规则 → Instructions
+- 手动/斜杠触发、可复用的单次任务模板 → Prompt File
+- Agent 在相关任务时自动加载、包含脚本/模板/资源 → Agent Skill
+- 切换角色 / 限制工具集 / 固定交接 → Custom Agent
+- 在 Agent 生命周期上执行确定性命令 → Hook
+- 安装/分发打包（预览）→ Agent Plugin (Preview)
 
-| 定制方式 | 作用 | 复杂度 | 适合新人？ |
-|---------|------|--------|-----------|
-| Custom Instructions | 项目编码规范 | 低 | 适合，最优先学 |
-| Prompt Files | 常用任务模板 | 低 | 适合，简单实用 |
-| Custom Agents | 专属角色 | 中 | 了解概念即可 |
-| Agent Skills | 能力包 | 中 | 了解概念即可 |
-| Hooks | 自动化触发 | 中高 | 后期再学 |
-| Plugins | 打包分发 | 高 | 后期再学 |
+各项简明规范：每个类型下按同一四项小节展示：适用场景 / 默认位置 / 最小示例 / 限制。
 
-定制选项的层次关系：
-
-```
-Instructions（编码规范，永远生效）
-  └─ Prompt Files（任务模板，手动调用）
-      └─ Skills（能力包，含脚本/模板）
-          └─ Custom Agents（角色 + 工具限制 + Handoff）
-              └─ Hooks（生命周期自动化）
-                  └─ Plugins（打包分发以上所有）
-```
-
----
-
-## 1. Custom Instructions（自定义指令）—— 永远生效的规则
-
-**是什么**：在项目中放一个 Markdown 文件，告诉 AI 你的编码规范、技术栈、架构约定。AI 在每次对话中都会自动遵守。
-
-**怎么做**：
-
-1. 在项目根目录创建 `.github/copilot-instructions.md`
-2. 写入你的规则，例如：
+## Instructions（项目指令）
+- 适用场景：定义项目级编码规范、架构偏好、审查要求，自动随每次聊天请求加入模型上下文。
+- 默认位置：`.github/copilot-instructions.md`（仓库根）；按文件匹配的可放 `.github/instructions/*.instructions.md`。
+- 最小示例（`.github/copilot-instructions.md`）：
 
 ```markdown
-# 项目编码规范
-
-## 技术栈
-- 前端：React 18 + TypeScript
-- 后端：Node.js + Express
-- 数据库：PostgreSQL
-
-## 命名规范
-- 组件名用 PascalCase
-- 变量名用 camelCase
-- 常量用 ALL_CAPS
-
-## 错误处理
-- async 操作必须用 try/catch
-- 错误必须带上下文信息记录日志
+## 团队约定（示例）
+- 语言：TypeScript 5.x
+- 代码风格：使用 Prettier/ESLint 约定
+- 日志：使用 team-logger 包并包含 traceId
 ```
+- 限制：作用于 Chat/Agent 模式请求（会话级），不保证影响编辑时的内联补全；请避免把能从代码静态分析得出的规则重复写入。
 
-3. 保存即可。以后每次对话，AI 都会遵守这些规则。
-
-**快速生成**：在聊天中输入 `/init`，AI 会分析你的项目并自动生成初始的指令文件。
-
-**文件级指令**：如果不同文件类型需要不同规则，创建 `.instructions.md` 文件：
+## Prompt File（提示词文件）
+- 适用场景：把常用命令或复用工作流封成 `/` 命令（手动触发），如生成组件、准备 PR 描述。
+- 默认位置：`.github/prompts/*.prompt.md`。
+- 最小示例（`.github/prompts/scaffold.prompt.md`）：
 
 ```yaml
 ---
-applyTo: "**/*.tsx"
----
-# React 组件规范
-- 使用函数组件和 Hooks
-- props 用 TypeScript interface 定义
-- 样式用 CSS Modules
-```
-
-**注意事项**：
-- 保持指令文件简洁——它们在每次对话中都会加载，只放 AI 无法从代码推断的信息
-- 自定义指令不影响内联补全建议（打字时的灰色提示），只影响 Chat 和 Agent 模式
-- 用 `applyTo` 分隔规则，不要把所有东西放一个文件
-
----
-
-## 2. Prompt Files（提示词文件）—— 可复用的任务模板
-
-**是什么**：把常用的 prompt 存成文件，用 `/命令名` 快速调用。
-
-**怎么做**：
-
-1. 在 `.github/prompts/` 目录下创建 `.prompt.md` 文件，例如 `new-component.prompt.md`：
-
-```yaml
----
-description: 生成一个新的 React 组件
+name: scaffold
+description: 生成基础 React 组件
 agent: agent
-tools: ['search/codebase', 'vscode/askQuestions']
 ---
-
-根据模板生成一个新的 React 组件。
-要求：
-- 使用函数组件和 TypeScript
-- 样式用 CSS Modules
-- 包含基本的 Props 类型定义
+生成一个函数式 React + TypeScript 组件，包含 Props 类型和基本样式引用。
 ```
+- 限制：需要用户触发（slash 或运行命令）；Prompt 的工具列表可覆盖 agent 的工具优先级；不要将大量全局规则写入 prompt 文件，使用 instructions 更合适。
 
-2. 在聊天中输入 `/new-component` 即可调用
-
-**变量**：支持 `${input:变量名}` 让用户在调用时填入参数：
-
-```yaml
-函数路径：${input:file_path:输入要测试的文件路径}
-```
-
-**Tool 引用**：在 body 中用 `#tool:工具名` 引用工具，如 `#tool:browser`、`#tool:vscode/askQuestions`
-
----
-
-## 3. Custom Agents（自定义智能体）—— 专属角色
-
-**是什么**：创建有特定人设和工具权限的 Agent。比如安全审查员、测试专家、架构师。
-
-**怎么做**：
-
-1. 在 `.github/agents/` 目录下创建 `.agent.md` 文件，例如 `security-reviewer.agent.md`：
+## Agent Skill（技能）
+- 适用场景：可复用、可被 Agent 自动加载的能力包，包含 `SKILL.md`、脚本与示例（测试、部署流程等）。Agent 会在任务匹配时逐步加载内容。
+- 默认位置：`.github/skills/<name>/SKILL.md`。
+- 最小示例（`.github/skills/web-test/SKILL.md`）：
 
 ```yaml
 ---
-name: security-reviewer
-description: 安全审查专家，检查代码中的安全漏洞
-tools: ['search', 'editor']
-handoffs:
-  - label: 开始修复
-    agent: agent
-    prompt: 修复上面发现的安全问题
+name: web-test
+description: 生成并运行网页端测试用例（示例）
+user-invocable: true
 ---
-
-你是安全审查专家。审查代码时：
-- 检查认证和授权
-- 验证输入处理
-- 查找 SQL 注入和 XSS 漏洞
-- 按严重程度分类报告问题
+# 步骤
+1. 发现目标页面
+2. 生成测试模板
 ```
+- 限制：`name` 必须为小写 kebab-case，目录名需匹配；技能可设为 `disable-model-invocation: true` 强制手动调用；大型技能可选实验性 `context: fork`。
 
-2. 在聊天 Agent 选择器中选择 `@security-reviewer`
-
-**Handoff（交接）**：一个 Agent 完成后，可以一键切换到下一个 Agent。
-
-```
-Plan Agent → [交接按钮] → Implement Agent → [交接按钮] → Review Agent
-```
-
-在 frontmatter 中定义：
-```yaml
-handoffs:
-  - label: 开始实现    # 按钮显示文字
-    agent: implementer  # 目标 agent
-    prompt: 按上面的计划实现  # 预填的 prompt
-    send: false         # false=需确认, true=自动提交
-```
-
----
-
-## 4. Agent Skills（智能体技能）—— 可复用的能力包
-
-**是什么**：比 Prompt File 更强大，可以包含脚本、模板、示例文件。是一个开放标准，跨 VS Code / Copilot CLI / Cloud Agent 通用。
-
-**怎么做**：
-
-1. 在 `.github/skills/` 下创建目录，如 `api-testing/`
-2. 创建 `SKILL.md`：
+## Custom Agent（自定义智能体）
+- 适用场景：为特定角色定制工具集、模型与指令（如安全审查、计划者），并支持 handoffs（交接按钮）。
+- 默认位置：`.github/agents/*.agent.md`。
+- 说明（可选字段）：`tools`、`model` 与 `handoffs` 为可选配置项。
+  - `tools`：限定该 agent 可调用的工具（如搜索、测试）；作者可列出想要可用的工具名称。
+  - `model`：建议或锁定使用的模型/模型系列（非必需，UI/设置仍可能覆盖）。
+  - `handoffs`：定义用户与外部流程或人工接手的交接点（按钮/说明）。
+- 最小示例（`.github/agents/security.agent.md`）：
 
 ```yaml
 ---
-name: api-testing
-description: API 测试技能，用于创建和运行 API 测试用例
+name: security
+description: 安全审查员（示例）
+tools: ['search']
 ---
-
-# API 测试技能
-
-## 使用流程
-1. 读取 API 定义文件
-2. 生成测试用例
-3. 运行测试并报告结果
-
-参考模板：[测试模板](./test-template.js)
+审查变更以发现输入校验、认证与授权问题。
 ```
+- 限制：自定义智能体可在 UI 下切换，agent-scoped hooks 为预览功能；若工具不可用会被忽略；agent 文件可为 `user-invocable: false`。
+不可用的工具名会被忽略；作者请从“Configure Tools”界面或自动完成中选择可用工具。
 
-3. 可在目录中放入脚本和模板文件
-4. 用 `/api-testing` 调用，或让 AI 自动匹配使用
-
-**快速生成**：输入 `/create-skill` 并描述你想要的技能。
-
-**关键规则**：
-- `name` 必须和目录名一致（如 `api-testing` → `skills/api-testing/SKILL.md`）
-- 只允许小写字母、数字、连字符
-- 目录中额外文件需在 SKILL.md 中用 Markdown 链接引用才会被加载
-
----
-
-## 5. Hooks（钩子）—— 自动化触发
-
-**是什么**：在 Agent 生命周期的关键点自动执行 shell 命令。确定性的、代码驱动的自动化。
-
-**怎么做**：
-
-在 `.github/hooks/` 下创建 JSON 文件，如 `format.json`：
+## Hook（钩子，Preview）
+- 适用场景：在确定的 Agent 生命周期点运行命令（格式化、阻断危险操作、审计等），以代码形式强制执行或检查结果。
+- 默认位置：`.github/hooks/*.json`（工作区）；也支持用户目录与 agent frontmatter（agent-scoped hooks，需启用设置）。
+- 最小示例（`.github/hooks/format.json`）：
 
 ```json
 {
   "hooks": {
     "PostToolUse": [
-      {
-        "type": "command",
-        "command": "npx prettier --write ."
-      }
+      { "type": "command", "command": "npx prettier --write ." }
     ]
   }
 }
 ```
+- 限制：Hooks 为预览（Preview）；官方定义的生命周期事件（截至 2026-07）包括：`SessionStart`、`UserPromptSubmit`、`PreToolUse`、`PostToolUse`、`PreCompact`、`SubagentStart`、`SubagentStop`、`Stop`；退出码与行为：`0` 解析 stdout，`2` 为阻断错误（停止并向模型展示 stderr），其他码显示警告并继续。Hook 输入/输出通过 stdin/stdout 的 JSON 交互。请避免让 agent 修改并直接执行未经审核的 hook 脚本。
 
-这样 Agent 每次修改文件后，自动运行 Prettier 格式化。
+## Agent Plugin（插件，Preview）
+- 适用场景：将技能、智能体、钩子与 MCP 配置打包并通过市场或本地路径分发给团队/组织。
+- 默认位置：插件需要 `plugin.json`（根）作为清单，插件可包含 `skills/`、`agents/`、`hooks`、`.mcp.json` 等（详见官方插件页面）。
+- 最小示例（`plugin.json` 精简）
 
-**8 个生命周期事件**：
-
-| 事件 | 触发时机 | 典型用途 |
-|------|---------|---------|
-| SessionStart | 新会话开始 | 初始化资源、检查项目状态 |
-| UserPromptSubmit | 用户发送消息 | 审计请求、注入系统上下文 |
-| PreToolUse | 工具执行前 | 阻止危险操作（如 rm -rf） |
-| PostToolUse | 工具执行后 | 运行格式化、测试 |
-| PreCompact | 上下文压缩前 | 保存重要状态 |
-| SubagentStart | 子 Agent 启动 | 跟踪嵌套使用 |
-| SubagentStop | 子 Agent 完成 | 汇总结果 |
-| Stop | 会话结束 | 生成报告、清理资源 |
-
-**退出码**：0=成功，2=阻止操作，其他=警告
-
----
-
-## 6. Plugins（插件）—— 打包分发
-
-**是什么**：把上述所有定制（Skills + Agents + Hooks + MCP）打包成一个可安装的插件，分发给团队。
-
-**结构**：
+```json
+{ "name": "my-dev-tools", "skills": "skills/", "agents": "agents/", "hooks": "hooks.json" }
 ```
-my-plugin/
-  plugin.json          # 元数据
-  skills/              # 技能
-  agents/              # 自定义 Agent
-  hooks.json           # 钩子配置
-  .mcp.json            # MCP 服务器配置
-```
+- 限制：插件支持多格式（Copilot/Claude 等），为预览功能；安装插件前请审查内容与权限；插件内的 hooks/MCP 会随插件启用而运行。
 
-**安装**：通过 `chat.pluginLocations` 或 `chat.plugins.marketplaces` 配置。
+## 逐步采用（Progressive adoption）
+1. 初始化项目指令（`.github/copilot-instructions.md`）→ 覆盖团队约定。
+2. 将高频手动任务抽成 Prompt File（`.github/prompts/*.prompt.md`）。
+3. 将可复用、需脚本与示例的工作流打包为 Skill（`.github/skills/<name>/SKILL.md`）。
+4. 当需要稳定角色与工具限制时创建 Custom Agent（`.github/agents/*.agent.md`）。
+5. 只有当需要确定性自动化或组织级分发时引入 Hooks / Agent Plugins（两者均处于预览，注意审计）。
 
-> 新人暂时不需要关注 Plugin，了解概念即可。
+## 故障排查（Troubleshooting）
+- 打开自定义编辑器：运行命令 `Chat: Open Customizations`（Agent Customizations 编辑器，预览）。
+- 管理 Hooks：运行 `Chat: Configure Hooks` 或在 `.github/hooks/` 检查 JSON 文件。
+- 查看诊断与加载信息：在 Chat 视图右上菜单选择 Diagnostics，或运行 `Developer: Show Agent Debug Logs` / `Developer: Open Agent Debug Panel` 以查看调试输出与 Hook 日志。
 
----
+注：BYOK（自带 API Key）配置属于第 01 章的模型/凭证管理，不在本节作为独立定制类型；请参阅 [概览与安装](01-overview-and-setup.md) 获取 BYOK 细节。
 
-## BYOK（自带 API Key）
-
-不绑定 GitHub 账号，用自己的 API Key 连接任意模型：
-- 通过 `chatLanguageModels.json` 配置
-- 支持 OpenAI、Anthropic、Azure 等提供商
-- 甚至支持本地模型（如 Ollama）
-- 不需要 Copilot 订阅
-
-## 常用 AI 设置
-
-通过 `File > Preferences > Settings`（Mac: `Code > Settings`）搜索：
-
-| 设置项 | 说明 | 默认值 |
-|--------|------|--------|
-| `chat.agent.enabled` | 启用或禁用 Agent 功能 | `true` |
-| `chat.agent.maxRequests` | Agent 最多可发送的请求数 | `25` |
-| `github.copilot.enable` | 为各语言启用或禁用内联建议 | `{ "*": true }` |
-| `github.copilot.nextEditSuggestions.enabled` | 启用下一次编辑建议（NES） | `true` |
-| `chat.disableAIFeatures` | 禁用并隐藏所有内置 AI 功能 | `false` |
-| `github.copilot.chat.localeOverride` | 指定聊天回复语言（`zh` = 中文） | `auto` |
-| `chat.checkpoints.enabled` | 启用或禁用检查点 | `true` |
-| `inlineChat.defaultModel` | 内联聊天的默认模型 | N/A |
-| `chat.editing.autoAcceptDelay` | 自动接受编辑的延迟（0 = 禁用） | `0` |
-
-### 让 AI 用中文回复
-
-在设置中搜索 `localeOverride`，将其设为 `zh`。
+## 参考（官方文档）
+- 概览：https://code.visualstudio.com/docs/agent-customization/overview
+- 指令（Instructions）：https://code.visualstudio.com/docs/agent-customization/custom-instructions
+- 提示文件（Prompt files）：https://code.visualstudio.com/docs/agent-customization/prompt-files
+- 技能（Agent Skills）：https://code.visualstudio.com/docs/agent-customization/agent-skills
+- 自定义智能体（Custom agents）：https://code.visualstudio.com/docs/agent-customization/custom-agents
+- 钩子（Hooks, Preview）：https://code.visualstudio.com/docs/agent-customization/hooks
+- 插件（Agent plugins, Preview）：https://code.visualstudio.com/docs/agent-customization/agent-plugins
 
 ---
 
-← 上一节：[Agent 模式](04-agent-mode.md) ｜ 下一节：[MCP 外部工具 →](06-mcp-and-external-tools.md)
+← 上一节：[Agent 与工作流](04-agents-and-workflows.md) ｜ 下一节：[MCP 与工具 →](06-mcp-and-tools.md)
