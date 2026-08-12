@@ -25,6 +25,12 @@ ai-tools-tutorial/
 │   │   └── appendix-demo-guide.md
 │   ├── 02-copilot-skills/
 │   ├── 03-hermes/
+│   │   ├── README.md
+│   │   ├── 01-what-is-hermes.md
+│   │   ├── 02-installation.md
+│   │   ├── 03-cli-tui-gateway.md
+│   │   ├── 04-memory-and-skills.md
+│   │   └── 05-hermes-vs-copilot.md
 │   └── 04-pi/
 ├── assets/
 └── templates/
@@ -33,7 +39,7 @@ ai-tools-tutorial/
 ## 第 1 期：VS Code Copilot（2026-07）
 
 | 文档 | 内容 |
-|------|------|
+| ------ | ------ |
 | [本期首页](docs/01-copilot/README.md) | 任务入口、阅读建议、官方基线 |
 | [概览与安装](docs/01-copilot/01-overview-and-setup.md) | 产品边界、账号、订阅、安装与验证 |
 | [聊天与内联交互](docs/01-copilot/02-chat-and-inline.md) | Chat View、Agents Window、Inline Chat、Quick Chat、内联建议 |
@@ -44,13 +50,24 @@ ai-tools-tutorial/
 | [安全与排错](docs/01-copilot/07-safety-and-troubleshooting.md) | 审查清单、权限、隐私、回滚和诊断入口 |
 | [讲师演示附录](docs/01-copilot/appendix-demo-guide.md) | 60-90 分钟演示流程、准备清单和 Prompt 速查 |
 
+## 第 3 期：Hermes Agent（2026-07）
+
+| 文档 | 内容 |
+| ------ | ------ |
+| [本期首页](docs/03-hermes/README.md) | 任务入口、阅读建议、官方基线与发布提示 |
+| [Hermes 是什么](docs/03-hermes/01-what-is-hermes.md) | 产品定位、核心能力、适用场景 |
+| [安装 Hermes](docs/03-hermes/02-installation.md) | 🥇 Copilot 陪跑安装、WSL2 + Ubuntu、VS Code 连接 WSL、Windows 桌面/原生安装、验证与排错 |
+| [使用 Hermes](docs/03-hermes/03-cli-tui-gateway.md) | Dashboard、桌面应用、CLI、TUI、Gateway 网关的正确分工 |
+| [记忆与技能系统](docs/03-hermes/04-memory-and-skills.md) | Memory 与 Skill 的概念、隐私边界和常用命令 |
+| [Hermes 与 Copilot](docs/03-hermes/05-hermes-vs-copilot.md) | 定位差异、协作方式、选型建议 |
+
 ## 后续规划
 
 | 期次 | 主题 | 状态 | 预计 |
-|------|------|------|------|
+| ------ | ------ | ------ | ------ |
 | 01 | VS Code Copilot 团队参考手册 | 维护中 | 2026-07 |
 | 02 | Copilot Skill 安装与使用 | 规划中 | TBD |
-| 03 | Hermes Agent 基础 | 规划中 | TBD |
+| 03 | Hermes Agent 基础 | 已完成并按官方文档核验 | 2026-08 |
 | 04 | Pi / OMP 工作流 | 规划中 | TBD |
 
 ## 贡献方式
@@ -58,4 +75,4 @@ ai-tools-tutorial/
 1. 文档使用 Markdown，中文撰写。
 2. 新增工具文档时，复制 [templates/tool-doc-template.md](templates/tool-doc-template.md) 作为起点。
 3. 截图、录屏和设计图放入 `assets/`。
-4. 涉及 VS Code / Copilot 快速迭代功能时，注明核验月份和官方参考链接。
+4. 涉及 VS Code / Copilot / Hermes Agent 快速迭代功能时，注明核验月份和官方参考链接。

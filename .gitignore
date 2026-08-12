@@ -1,5 +1,6 @@
 .DS_Store
 .worktrees/
+.pi/
 *.tmp
 *.swp
 ~$*
