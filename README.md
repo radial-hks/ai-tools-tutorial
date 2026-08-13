@@ -36,7 +36,8 @@ ai-tools-tutorial/
 │   │   ├── 02-installation.md
 │   │   ├── 03-cli-tui-gateway.md
 │   │   ├── 04-memory-and-skills.md
-│   │   └── 05-hermes-vs-copilot.md
+│   │   ├── 05-hermes-vs-copilot.md
+│   │   └── appendix-wsl-guide.md
 │   └── 04-pi/
 │       ├── README.md
 │       ├── 01-why-pi.md
@@ -84,6 +85,7 @@ ai-tools-tutorial/
 | [使用 Hermes](docs/03-hermes/03-cli-tui-gateway.md) | Dashboard、桌面应用、CLI、TUI、Gateway 网关的正确分工 |
 | [记忆与技能系统](docs/03-hermes/04-memory-and-skills.md) | Memory 与 Skill 的概念、隐私边界和常用命令 |
 | [Hermes 与 Copilot](docs/03-hermes/05-hermes-vs-copilot.md) | 定位差异、协作方式、选型建议 |
+| [WSL 保姆级补充指南](docs/03-hermes/appendix-wsl-guide.md) | WSL 加速安装、日常管理、开发三件套、文件互访、网络与备份 |
 
 ## 第 4 期：Pi 工作流（2026-08）
 

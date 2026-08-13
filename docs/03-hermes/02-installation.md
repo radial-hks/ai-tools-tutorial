@@ -66,6 +66,8 @@
 
 WSL2 可以理解成“Windows 里的 Linux 小电脑”。如果你以后要做较多自动化、脚本或开发相关任务，WSL2 是稳定选择。
 
+> 💡 本章只讲“装上并跑通”的最小路径；想装得更顺手（国内加速、其他发行版、文件互访、备份等），见补充指南 [WSL 保姆级补充指南](appendix-wsl-guide.md)。
+>
 > 💡 **日常小 tips：把 VS Code 连接到本地 WSL。** 如果你已经在用 VS Code 和 Copilot，建议先在 VS Code 里安装 **WSL** 扩展；如果团队环境是通过 SSH 进入本机 WSL，也可以使用 **Remote - SSH**。连接成功后，VS Code 的文件区、终端和 Copilot Chat 都会运行在同一个 WSL 项目环境里：安装 Hermes、启动 dashboard、排查报错都可以在同一个窗口完成。
 
 ### 第 1 步：启用 WSL2
@@ -255,10 +257,10 @@ C:\Users\xiaoming\Desktop\Project
 https://hermes-agent.nousresearch.com/
 ```
 
-2. 下载 Hermes Desktop 的 Windows 安装器。
-3. 双击安装器，按提示安装。
-4. 第一次启动时，桌面应用会在后台完成 Hermes CLI、Python、Node、Git 等依赖引导。
-5. 按界面提示配置模型账号或运行 setup。
+1. 下载 Hermes Desktop 的 Windows 安装器。
+2. 双击安装器，按提示安装。
+3. 第一次启动时，桌面应用会在后台完成 Hermes CLI、Python、Node、Git 等依赖引导。
+4. 按界面提示配置模型账号或运行 setup。
 
 > ⚠️ 本手册不写死 `.exe` 文件名，因为安装包名称可能随版本变化。请以官网或团队技术负责人提供的下载链接为准。
 

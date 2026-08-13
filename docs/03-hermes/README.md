@@ -19,6 +19,7 @@
 | --- | --- |
 | 了解 Hermes 是什么、能做什么 | [01-what-is-hermes.md](01-what-is-hermes.md) |
 | 安装 Hermes（Copilot 陪跑 / WSL + VS Code / Windows 桌面或原生命令行） | [02-installation.md](02-installation.md) |
+| 装好 WSL 后想用得更顺手（国内加速、多实例、文件互访、备份） | [appendix-wsl-guide.md](appendix-wsl-guide.md) |
 | 打开并使用 Hermes（dashboard / 桌面 / CLI / TUI / Gateway） | [03-cli-tui-gateway.md](03-cli-tui-gateway.md) |
 | 理解记忆和技能系统 | [04-memory-and-skills.md](04-memory-and-skills.md) |
 | 对比 Hermes 与 Copilot、选择合适工具 | [05-hermes-vs-copilot.md](05-hermes-vs-copilot.md) |
@@ -29,6 +30,7 @@
 | ---: | --- | --- | ---: |
 | 1 | [Hermes 是什么](01-what-is-hermes.md) | 产品定位、核心能力、适用场景与边界 | 6 分钟 |
 | 2 | [安装 Hermes](02-installation.md) | Copilot 陪跑、WSL2 + Ubuntu、VS Code 连接 WSL、Windows 桌面/原生安装、验证与排错 | 25 分钟 |
+| 附 | [WSL 保姆级补充指南](appendix-wsl-guide.md) | WSL 加速安装、日常管理、开发三件套、文件互访、网络与备份 | 10 分钟 |
 | 3 | [使用 Hermes](03-cli-tui-gateway.md) | Dashboard、桌面应用、命令行、TUI、Gateway 的正确分工 | 10 分钟 |
 | 4 | [记忆与技能系统](04-memory-and-skills.md) | Memory 与 Skill 的概念、隐私边界和常用命令 | 8 分钟 |
 | 5 | [Hermes 与 Copilot](05-hermes-vs-copilot.md) | 定位差异、协作方式、选型建议 | 6 分钟 |
