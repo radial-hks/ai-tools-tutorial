@@ -44,7 +44,7 @@ Skill 分「项目级」和「个人级」两种，放的位置不同。官方�
             └── ...（脚本、模板等）
 ```
 
-复制后**重载 VS Code 窗口**（命令面板 `Reload Window`），让 Copilot 重新发现 Skill。
+复制后，如果 Skill 没有立即出现，试试命令面板 `Reload Window` 重载窗口，让 Copilot 重新发现它。
 
 > ⚠️ 目录名必须和 `SKILL.md` 里 `name` 字段**完全一致**，否则 Skill 会静默不加载（详见 [第 3 章](03-create-skill.md) 的命名规范）。
 
@@ -101,10 +101,11 @@ Skill 装好后有**两种被使用的方式**，由 `SKILL.md` 的前置信息�
 
 装完怎么确认「真的用上了」？按顺序试：
 
-1. **看 `/` 菜单**：在聊天输入框输入 `/`，列表中应该出现这个 Skill 的名字（除非 `user-invocable: false`）。
-2. **直接调用一次**：输入 `/技能名` 加一句需求，看它是否按 `SKILL.md` 的步骤执行。
-3. **看诊断信息**：Chat 视图右上菜单选 **Diagnostics**，或运行 `Developer: Show Agent Debug Logs`，查看 Skill 的加载与匹配信息。
-4. **反向验证自动加载**：不提技能名、只描述任务（例如「帮我跑一下网页测试」），看 Copilot 是否自动采用了对应 Skill。
+1. **看 Configure Skills 菜单**：在聊天输入框输入 `/skills`，快速打开 Configure Skills 菜单，确认已安装的 Skill 出现在列表里。
+2. **看 `/` 菜单**：输入 `/`，列表中应该出现这个 Skill 的名字（除非 `user-invocable: false`）。
+3. **直接调用一次**：输入 `/技能名` 加一句需求，看它是否按 `SKILL.md` 的步骤执行。
+4. **看调试日志**：在 Chat 视图点省略号（**...**）菜单选 **Show Agent Debug Logs**，或在命令面板运行 `Developer: Open Agent Debug Panel`，查看 Skill 的加载与匹配信息。
+5. **反向验证自动加载**：不提技能名、只描述任务（例如「帮我跑一下网页测试」），看 Copilot 是否自动采用了对应 Skill。
 
 > ⚠️ 若第 1、2 步就看不到 Skill，先检查三件事：目录位置对不对（项目级要在 `.github/skills/`）、目录名和 `name` 是否一致、是否已重载窗口。
 

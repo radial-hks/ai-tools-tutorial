@@ -65,6 +65,8 @@ description: 把散乱的贴图文件按「角色名_部位_后缀」的规则�
 | `context` | 可选（实验性） | 加载方式，默认 `inline`（指令加入父会话上下文）；设 `fork` 则在独立子代理里运行、只回传最终结果。 |
 
 > 💡 记住两个必填字段的分工：**`name` 管「它叫什么」，`description` 管「什么时候该用它」。** `description` 写得好不好，直接决定 Copilot 能不能在需要时自动挑中它。
+>
+> ⚠️ 使用 `context: fork` 前，需在 VS Code 设置中启用 `github.copilot.chat.skillTool.enabled`，否则分叉上下文不生效。
 
 ### 正文（body）怎么写
 
@@ -139,11 +141,12 @@ Skill 目录里 `SKILL.md` 是唯一必填文件，其余按需添加：
 
 写完后的验证清单：
 
-1. **重载窗口**：命令面板 `Reload Window`，让 Copilot 重新发现。
-2. **看 `/` 菜单**：输入 `/`，确认名字出现（除非 `user-invocable: false`）。
-3. **手动调用一次**：`/你的技能名` 加一句需求，看是否按正文步骤走。
-4. **测自动加载**：不提技能名、只描述任务，看 Copilot 会不会自动挑中——这最能检验 `description` 写得好不好。
-5. **看诊断**：Chat 视图右上菜单 **Diagnostics**，或 `Developer: Show Agent Debug Logs`。
+1. **重载窗口**：如果 Skill 没立即出现，试试命令面板 `Reload Window`。
+2. **看 Configure Skills 菜单**：输入 `/skills`，确认新 Skill 出现在列表里。
+3. **看 `/` 菜单**：输入 `/`，确认名字出现（除非 `user-invocable: false`）。
+4. **手动调用一次**：`/你的技能名` 加一句需求，看是否按正文步骤走。
+5. **测自动加载**：不提技能名、只描述任务，看 Copilot 会不会自动挑中——这最能检验 `description` 写得好不好。
+6. **看调试日志**：Chat 视图省略号（**...**）菜单选 **Show Agent Debug Logs**，或命令面板运行 `Developer: Open Agent Debug Panel`。
 
 常见坑对照：
 

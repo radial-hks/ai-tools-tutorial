@@ -52,10 +52,11 @@
 | Skill 目录名 | 存放 Skill 的文件夹名，必须与 `SKILL.md` 的 `name` 字段完全一致，否则静默不加载。 |
 | name（Skill 字段） | Skill 唯一标识，只能小写字母、数字、短横线，最长 64 字符。 |
 | description（Skill 字段） | 描述 Skill 干什么以及何时用，决定 Copilot 能否按需自动加载它。 |
+| argument-hint（Skill 字段） | 作为斜杠命令调用时，聊天输入框里显示的提示文字，例如 `[test file] [options]`。 |
 | disable-model-invocation | `SKILL.md` 前置字段：设 `true` 时禁止模型自动加载，只能手动 `/` 调用。 |
 | user-invocable | `SKILL.md` 前置字段：控制 Skill 是否出现在 `/` 菜单，默认 `true`。 |
 | 三级加载 | Skill 的按需加载机制：先读 name/description 判断相关性，再加载正文，最后才读取被引用的脚本/资源。 |
-| 分叉上下文（context: fork） | 让 Skill 在独立子代理中运行、只回传最终结果，保持主会话上下文干净（实验性）。 |
+| context（Skill 字段） | 实验性字段，控制加载方式：默认 `inline`（指令加入父会话上下文），设 `fork` 则在独立子代理中运行、只回传最终结果。 |
 | Agent Skills 标准 | Skill 的开放标准（agentskills.io），跨 VS Code、Copilot CLI、云智能体可移植。 |
 
 ## Hermes Agent 术语

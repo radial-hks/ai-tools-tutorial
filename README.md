@@ -74,7 +74,7 @@ ai-tools-tutorial/
 | [Skill 与 Prompt File / Instructions 的选型](docs/02-copilot-skills/04-skill-vs-others.md) | 三者对比、决策表、选型口诀、组合使用 |
 | [常用 Skill 推荐与团队实践](docs/02-copilot-skills/05-recommendations-and-practice.md) | 美术/建模场景示例、团队推广、安全审查注意 |
 
-## 第 3 期：Hermes Agent（2026-07）
+## 第 3 期：Hermes Agent（2026-08）
 
 | 文档 | 内容 |
 | ------ | ------ |

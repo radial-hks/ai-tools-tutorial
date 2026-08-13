@@ -54,7 +54,8 @@
 ## 官方参考
 
 - Agent Skills 官方文档（含使用共享 Skill 的安全提示）: <https://code.visualstudio.com/docs/agent-customization/agent-skills>
-- 终端工具与安全: <https://code.visualstudio.com/docs/agent-customization/overview>
+- 终端工具与脚本执行控制: <https://code.visualstudio.com/docs/agents/run/tools#_run-terminal-commands>
+- 安全审查与 auto-approve: <https://code.visualstudio.com/docs/agents/run/security#_approvals-and-review>
 - Agent 插件（分发 Skill）: <https://code.visualstudio.com/docs/agent-customization/agent-plugins>
 
 ---
