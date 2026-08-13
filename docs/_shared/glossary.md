@@ -47,7 +47,7 @@
 ## Hermes Agent 术语
 
 | 术语 | 解释 |
-|------|------|
+| ------ | ------ |
 | Hermes Agent | Nous Research 推出的个人 AI Agent，可通过桌面、CLI、TUI 和 Gateway 使用工具完成多步任务。 |
 | Hermes CLI | 在终端中运行的 Hermes 命令行入口，例如 `hermes`、`hermes chat -q`、`hermes setup`。 |
 | Hermes TUI | 终端里的现代交互界面，使用 `hermes --tui` 启动。 |
@@ -59,8 +59,17 @@
 | Profile | Hermes 的隔离配置空间，不同 Profile 可以有独立配置、会话、记忆和技能。 |
 | Cron | Hermes 的定时任务系统，用于按计划运行提示词或脚本。 |
 
-## 后续工具术语
+## Pi 工作流术语
 
 | 术语 | 解释 |
-|------|------|
-| Pi / OMP | 后续规划中的模型调度与平台主题。 |
+| ------ | ------ |
+| Pi / Pi Agent | 跑在终端里的极简 AI 编程助手，命令名 `pi`；默认只带读/写/改/跑命令四个基础工具，可无限扩展。 |
+| Oh My Pi（OMP） | Pi 的「功能加强版」，命令名 `omp`；开箱即用子代理、待办清单、LSP、浏览器、Python、联网搜索等。 |
+| herdr | 终端工作区管理器：把多个终端组织成 workspace / tab / pane，并识别每个 pane 里跑的 agent。 |
+| workspace / tab / pane | herdr 的三层结构：工作区（w1）→ 标签页（w1:t1）→ 面板（w1:p1）。 |
+| agent 状态（herdr） | herdr 对 pane 内 agent 的归类：idle / working / blocked / done / unknown。 |
+| AGENTS.md | Pi 每次启动自动加载的项目说明文件，可写项目约定、常用命令、注意事项；也可用 CLAUDE.md。 |
+| Pi 包（Pi Package） | 把扩展、技能、主题等打包分发的方式，通过 npm 或 git 安装。 |
+| Pi Skill（技能） | Pi 按需加载的能力包，按触发条件自动启用；放在 `~/.pi/agent/skills/` 或 `.pi/skills/`。 |
+| Pi Extension（扩展） | 用 TypeScript 写的自定义工具、命令、快捷键、UI；放在 `~/.pi/agent/extensions/` 或 `.pi/extensions/`。 |
+| Pi Theme（主题） | Pi 的配色方案，热重载即时生效；放在 `~/.pi/agent/themes/` 或 `.pi/themes/`。 |

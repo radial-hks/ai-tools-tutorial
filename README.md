@@ -32,6 +32,13 @@ ai-tools-tutorial/
 │   │   ├── 04-memory-and-skills.md
 │   │   └── 05-hermes-vs-copilot.md
 │   └── 04-pi/
+│       ├── README.md
+│       ├── 01-why-pi.md
+│       ├── 02-installation.md
+│       ├── 03-pi-agent.md
+│       ├── 04-oh-my-pi.md
+│       ├── 05-herdr.md
+│       └── 06-cooperation.md
 ├── assets/
 └── templates/
 ```
@@ -61,6 +68,18 @@ ai-tools-tutorial/
 | [记忆与技能系统](docs/03-hermes/04-memory-and-skills.md) | Memory 与 Skill 的概念、隐私边界和常用命令 |
 | [Hermes 与 Copilot](docs/03-hermes/05-hermes-vs-copilot.md) | 定位差异、协作方式、选型建议 |
 
+## 第 4 期：Pi 工作流（2026-08）
+
+| 文档 | 内容 |
+| ------ | ------ |
+| [本期首页](docs/04-pi/README.md) | 任务入口、阅读建议、三大件分工与官方基线 |
+| [为什么需要 Pi](docs/04-pi/01-why-pi.md) | Pi 的定位、与 Copilot / Hermes 的差异、三大件分工 |
+| [安装 Pi](docs/04-pi/02-installation.md) | 前置条件、官方脚本 / npm 安装、登录模型、验证与排错 |
+| [使用 Pi Agent](docs/04-pi/03-pi-agent.md) | 交互界面、常用命令与快捷键、会话、AGENTS.md 与定制 |
+| [Oh My Pi](docs/04-pi/04-oh-my-pi.md) | OMP 与 Pi 的关系、增强能力、安装初始化与选型 |
+| [herdr 工作区](docs/04-pi/05-herdr.md) | workspace / tab / pane 概念、查看其他面板、并行多 agent |
+| [三者配合与选型](docs/04-pi/06-cooperation.md) | Copilot / Hermes / Pi / OMP / herdr 协作全景与选型地图 |
+
 ## 后续规划
 
 | 期次 | 主题 | 状态 | 预计 |
@@ -68,7 +87,7 @@ ai-tools-tutorial/
 | 01 | VS Code Copilot 团队参考手册 | 维护中 | 2026-07 |
 | 02 | Copilot Skill 安装与使用 | 规划中 | TBD |
 | 03 | Hermes Agent 基础 | 已完成并按官方文档核验 | 2026-08 |
-| 04 | Pi / OMP 工作流 | 规划中 | TBD |
+| 04 | Pi / OMP / herdr 工作流 | 已完成并按本机环境核验 | 2026-08 |
 
 ## 贡献方式
 
