@@ -24,6 +24,12 @@ ai-tools-tutorial/
 │   │   ├── 07-safety-and-troubleshooting.md
 │   │   └── appendix-demo-guide.md
 │   ├── 02-copilot-skills/
+│   │   ├── README.md
+│   │   ├── 01-what-is-skill.md
+│   │   ├── 02-install-and-use.md
+│   │   ├── 03-create-skill.md
+│   │   ├── 04-skill-vs-others.md
+│   │   └── 05-recommendations-and-practice.md
 │   ├── 03-hermes/
 │   │   ├── README.md
 │   │   ├── 01-what-is-hermes.md
@@ -57,6 +63,17 @@ ai-tools-tutorial/
 | [安全与排错](docs/01-copilot/07-safety-and-troubleshooting.md) | 审查清单、权限、隐私、回滚和诊断入口 |
 | [讲师演示附录](docs/01-copilot/appendix-demo-guide.md) | 60-90 分钟演示流程、准备清单和 Prompt 速查 |
 
+## 第 2 期：Copilot Skill 安装与使用（2026-08）
+
+| 文档 | 内容 |
+| ------ | ------ |
+| [本期首页](docs/02-copilot-skills/README.md) | 任务入口、阅读建议、官方基线与发布提示 |
+| [什么是 Copilot Skill](docs/02-copilot-skills/01-what-is-skill.md) | Skill 的定义、解决什么问题、与 Instructions / Prompt File / Custom Agent 的区别 |
+| [安装与使用现有 Skill](docs/02-copilot-skills/02-install-and-use.md) | 获取来源、安装到项目/个人目录、启用/调用、验证生效 |
+| [创建自定义 Skill](docs/02-copilot-skills/03-create-skill.md) | `SKILL.md` 完整结构、最小示例、命名规范、目录要求、测试排错 |
+| [Skill 与 Prompt File / Instructions 的选型](docs/02-copilot-skills/04-skill-vs-others.md) | 三者对比、决策表、选型口诀、组合使用 |
+| [常用 Skill 推荐与团队实践](docs/02-copilot-skills/05-recommendations-and-practice.md) | 美术/建模场景示例、团队推广、安全审查注意 |
+
 ## 第 3 期：Hermes Agent（2026-07）
 
 | 文档 | 内容 |
@@ -85,7 +102,7 @@ ai-tools-tutorial/
 | 期次 | 主题 | 状态 | 预计 |
 | ------ | ------ | ------ | ------ |
 | 01 | VS Code Copilot 团队参考手册 | 维护中 | 2026-07 |
-| 02 | Copilot Skill 安装与使用 | 规划中 | TBD |
+| 02 | Copilot Skill 安装与使用 | 已完成并按官方文档核验 | 2026-08 |
 | 03 | Hermes Agent 基础 | 已完成并按官方文档核验 | 2026-08 |
 | 04 | Pi / OMP / herdr 工作流 | 已完成并按本机环境核验 | 2026-08 |
 
