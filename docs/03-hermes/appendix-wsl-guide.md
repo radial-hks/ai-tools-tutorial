@@ -147,6 +147,48 @@ wsl --import Ubuntu2 D:\WSL\Ubuntu2 ubuntu.tar
 
 > 🤖 换电脑前先 `wsl --export` 打包，新电脑上 `wsl --import` 恢复，比重新装一遍快得多。
 
+## 团队共享：公盘快照（解决下载慢）
+
+如果团队里大家下载 WSL、Ubuntu 和 Hermes 依赖都受网络影响，最省事的做法是：**技术负责人装好一份「Ubuntu + 开发三件套 + Hermes」的干净快照，导出后放到公盘，同事拷贝到本地再导入**，全程不用再走外网下载。
+
+### 技术负责人：制作快照
+
+```powershell
+# 先关掉要导出的实例，保证快照干净
+wsl --terminate Ubuntu
+# 导出（装好、验证通过、且未登录任何账号）
+wsl --export Ubuntu hermes-wsl-2026-08.tar
+```
+
+> ⚠️ **导出前先确认没有残留账号信息**：不要用已经登录过 Hermes 或填过 API Key 的实例做快照；快照里绝不能带团队或个人的密钥、密码、OAuth 登录态。
+
+### 同事：从公盘导入
+
+**第 1 步**：把 `.tar` 文件从公盘**先拷到本地磁盘**（例如 `D:\WSL\`）。直接从网络盘路径导入会很慢、易出错。
+
+**第 2 步**：打开 PowerShell 导入：
+
+```powershell
+wsl --import ubuntu-hermes D:\WSL\ubuntu-hermes hermes-wsl-2026-08.tar
+```
+
+**第 3 步**：修正默认登录用户（导入的实例默认以 root 登录，要改成快照里建好的普通用户名）：
+
+```powershell
+ubuntu-hermes config --default-user 快照里的用户名
+```
+
+**第 4 步**：启动并配置你自己的模型账号：
+
+```bash
+wsl -d ubuntu-hermes
+hermes model    # 或 hermes setup，输入你自己的 API Key / 账号
+```
+
+> ⚠️ 模型账号和 API Key 一律由每个人导入后自己配置，不要共享，也不写进快照。
+>
+> 💡 快照会过期：Hermes 或依赖更新后，技术负责人定期重做一份，用日期命名（如 `hermes-wsl-2026-09.tar`），旧的保留或下架。
+
 ## 安全：关闭自动挂载（可选）
 
 默认情况下，WSL 里的 AI 能看到并操作 Windows 文件（`/mnt/c` 等）。如果希望进一步隔离，在 Linux 的 `/etc/wsl.conf` 里加：
