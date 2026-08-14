@@ -27,7 +27,7 @@
 | 维度 | TencentDB Agent Memory | Mnemosyne | Hindsight |
 | --- | --- | --- | --- |
 | **定位** | 团队记忆中枢（Memory Hub），四类资产统一管理 | 通用、Hermes-first 的本地记忆层 | 学习型记忆引擎（Retain / Recall / Reflect） |
-| **记忆组织方式** | 四类资产 + L0–L3 蒸馏层级，按需注入 | **BEAM** 双层记忆 + 混合评分（50% 向量 + 30% 全文 + 20% 重要度） | 世界事实 / 经验 / 实体摘要 / 演化信念四张逻辑网络 |
+| **记忆组织方式** | 四类资产 + L0–L3 蒸馏层级，按需注入 | **BEAM** 双层记忆 + 混合评分（50% 向量 + 30% 全文 + 20% 重要度，官方文档另有 0.5/0.4/0.1 写法，**待核验**） | 世界事实 / 经验 / 实体摘要 / 演化信念四张逻辑网络 |
 | **存储后端** | SQLite + 本地文件（Docker 卷）；云形态用 TCVDB + COS + Redis | 单文件 SQLite（36 张表），向量与全文检索全在进程内 | PostgreSQL 14+（pgvector 向量 + GIN 全文 + 递归 CTE 图查询）；开发用内嵌 pg0 |
 | **部署形态** | Docker 三件套（官方推荐）；也支持源码直跑 / K8s / 云服务 | 纯 Python 库，零服务零守护进程 | Docker（full / slim 镜像）或 Python 嵌入式 daemon |
 | **Agent 集成** | Claude Code / Codex / Hermes / OpenClaw / CodeBuddy / WorkBuddy / dsh / 通用 OpenAI 兼容 | Hermes / Pi / Claude Code / Codex / Cursor / OpenClaw / 任意 MCP 客户端 | 约 50 个官方集成（Claude Code / Codex / Cursor / Hermes / OpenClaw / LangGraph…）+ MCP |
@@ -120,7 +120,7 @@
 | --- | --- | --- | --- |
 | **TencentDB** | PersonaMem：48% → **76%**（相对 +59%） | 无论文；当前 v2.0.1-beta.1（核验期 3 周 3 个版本，迭代密集） | 仅此一项公开基准，无复现脚本/数据集链接（**待核验**） |
 | **Mnemosyne** | BEAM 100K：**65.2%**（v3.0.0 点测）；LongMemEval 98.9% Recall@All@5 | 无论文；当前 3.16.0 | ⚠️ BEAM 数字是 v3.0.0（2026-05）的，**当前代码未重跑**（官方列为 open task）；LongMemEval 指标口径与别家不同 |
-| **Hindsight** | LongMemEval **91.4%**；LoCoMo 89.61%；BEAM 10M 档 64.1% 排 #1 | arXiv:2512.12818《Hindsight is 20/20》（2025-12）；当前 0.9.1 | 论文称开源 20B 模型把准确率从 39% 提到 83.6%、超过 full-context GPT-4o；数据由 Virginia Tech + Washington Post 独立复现，其余厂商分数为自报。官方后续宣称 LongMemEval-s 94.6%，但同榜 Chronos 95.6%、Mastra 92.8%、Honcho 90.4% 更高——宣传口径同样要甄别 |
+| **Hindsight** | LongMemEval **91.4%**；LoCoMo 89.61%；BEAM 10M 档 64.1% 排 #1 | arXiv:2512.12818《Hindsight is 20/20》（2025-12）；当前 0.9.1 | 论文称开源 20B 模型把准确率从 39% 提到 83.6%、超过 full-context GPT-4o；数据由 Virginia Tech + Washington Post 独立复现，其余厂商分数为自报。官方后续宣称 LongMemEval-s 94.6%，但同榜 Chronos 95.6% 更高、Mastra 92.8% 与 Honcho 90.4% 接近——各家互有高低，宣传口径同样要甄别 |
 
 **三条诚实提醒**：
 
