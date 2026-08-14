@@ -120,7 +120,7 @@
 | --- | --- | --- | --- |
 | **TencentDB** | PersonaMem：48% → **76%**（相对 +59%） | 无论文；当前 v2.0.1-beta.1（核验期 3 周 3 个版本，迭代密集） | 仅此一项公开基准，无复现脚本/数据集链接（**待核验**） |
 | **Mnemosyne** | BEAM 100K：**65.2%**（v3.0.0 点测）；LongMemEval 98.9% Recall@All@5 | 无论文；当前 3.16.0 | ⚠️ BEAM 数字是 v3.0.0（2026-05）的，**当前代码未重跑**（官方列为 open task）；LongMemEval 指标口径与别家不同 |
-| **Hindsight** | LongMemEval **91.4%**；LoCoMo 89.61%；BEAM 10M 档 64.1% 排 #1 | arXiv:2512.12818《Hindsight is 20/20》（2025-12）；当前 0.9.1 | 论文称开源 20B 模型把准确率从 39% 提到 83.6%、超过 full-context GPT-4o；数据由 Virginia Tech + Washington Post 独立复现，其余厂商分数为自报 |
+| **Hindsight** | LongMemEval **91.4%**；LoCoMo 89.61%；BEAM 10M 档 64.1% 排 #1 | arXiv:2512.12818《Hindsight is 20/20》（2025-12）；当前 0.9.1 | 论文称开源 20B 模型把准确率从 39% 提到 83.6%、超过 full-context GPT-4o；数据由 Virginia Tech + Washington Post 独立复现，其余厂商分数为自报。官方后续宣称 LongMemEval-s 94.6%，但同榜 Chronos 95.6%、Mastra 92.8%、Honcho 90.4% 更高——宣传口径同样要甄别 |
 
 **三条诚实提醒**：
 
