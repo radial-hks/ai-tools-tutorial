@@ -88,3 +88,20 @@
 | Pi Skill（技能） | Pi 按需加载的能力包，按触发条件自动启用；放在 `~/.pi/agent/skills/` 或 `.pi/skills/`。 |
 | Pi Extension（扩展） | 用 TypeScript 写的自定义工具、命令、快捷键、UI；放在 `~/.pi/agent/extensions/` 或 `.pi/extensions/`。 |
 | Pi Theme（主题） | Pi 的配色方案，热重载即时生效；放在 `~/.pi/agent/themes/` 或 `.pi/themes/`。 |
+
+## Agent 记忆系统术语
+
+| 术语 | 解释 |
+| ------ | ------ |
+| Agent Memory（Agent 记忆） | 跨会话保存的偏好、事实、流程与知识，让下一个会话或下一个 Agent 不必从头教起；不等于聊天记录存档。 |
+| Memory Asset（记忆资产） | TencentDB Agent Memory 的四类可复用资产：Chat Memory / Skill / Wiki / CodeGraph。 |
+| Chat Memory（对话记忆） | 从对话中沉淀的记忆：偏好、事实、决策与交互历史；TencentDB 内部分 L0–L3 四级蒸馏。 |
+| L0–L3 蒸馏 | Chat Memory 的层层提炼：L0 原始对话 → L1 原子事实 → L2 场景 → L3 长期画像。 |
+| CodeGraph（代码图谱） | 索引代码符号、文件、调用关系与影响路径的记忆资产，用于改动前的影响面分析。 |
+| Retain / Recall / Reflect | Hindsight 的记忆三阶段：记住（LLM 抽取事实）→ 检索（多路召回+重排）→ 反思（在记忆上推理出新结论）。 |
+| BEAM | Mnemosyne 的双层记忆结构（Bilevel Episodic-Associative Memory）：工作记忆 + 情景记忆，外加草稿区。 |
+| Working / Episodic Memory | 工作记忆：自动注入 prompt 的热上下文；情景记忆：`sleep()` 整合后的长期存储。 |
+| local-first（本地优先） | 数据默认存本机、无外部服务依赖的部署哲学；Mnemosyne 的 zero-cloud 是其极致形态。 |
+| Zero-cloud | Mnemosyne 的卖点：默认零外发、零云依赖；只有主动开启远程 embedding / LLM / sync 才会联网。 |
+| Memory Provider | Hermes 的外部记忆提供方接口，可用 `hermes memory setup` 或 `hermes config set memory.provider` 切换。 |
+| LongMemEval / BEAM | 两个常用的 Agent 长期记忆基准；各家判分模型与档位不同，横向分数仅供参考。 |

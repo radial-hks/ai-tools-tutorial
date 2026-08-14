@@ -46,6 +46,13 @@ ai-tools-tutorial/
 │       ├── 04-oh-my-pi.md
 │       ├── 05-herdr.md
 │       └── 06-cooperation.md
+│   └── 05-agent-memory/
+│       ├── README.md
+│       ├── 01-why-agent-memory.md
+│       ├── 02-memory-systems-comparison.md
+│       ├── 03-relation-to-hermes-memory.md
+│       ├── 04-privacy-and-deployment.md
+│       └── appendix-hands-on.md
 ├── assets/
 └── templates/
 ```
@@ -99,6 +106,17 @@ ai-tools-tutorial/
 | [herdr 工作区](docs/04-pi/05-herdr.md) | workspace / tab / pane 概念、查看其他面板、并行多 agent |
 | [三者配合与选型](docs/04-pi/06-cooperation.md) | Copilot / Hermes / Pi / OMP / herdr 协作全景与选型地图 |
 
+## 第 5 期：Agent 记忆系统（2026-08）
+
+| 文档 | 内容 |
+| ------ | ------ |
+| [本期首页](docs/05-agent-memory/README.md) | 任务入口、阅读建议、官方基线与发布提示 |
+| [为什么 Agent 需要长期记忆](docs/05-agent-memory/01-why-agent-memory.md) | 记忆 ≠ 聊天记录、四类记忆资产（Chat Memory / Skill / Wiki / CodeGraph）与 L0–L3 蒸馏 |
+| [三个记忆系统横向对比](docs/05-agent-memory/02-memory-systems-comparison.md) | TencentDB Agent Memory vs Mnemosyne vs Hindsight：架构、集成、基准、决策表与选型口诀 |
+| [与 Hermes Memory 的关系](docs/05-agent-memory/03-relation-to-hermes-memory.md) | 从"记什么"到"记忆架构选型"、给本机 Hermes 接 Mnemosyne / TencentDB / Hindsight 三条路径 |
+| [隐私与部署权衡](docs/05-agent-memory/04-privacy-and-deployment.md) | local-first vs 云端、成本构成、隐私红线与团队落地路线 |
+| [本机实测记录](docs/05-agent-memory/appendix-hands-on.md) | 三家系统真实安装命令、输出、踩坑与回退清单 |
+
 ## 后续规划
 
 | 期次 | 主题 | 状态 | 预计 |
@@ -107,7 +125,7 @@ ai-tools-tutorial/
 | 02 | Copilot Skill 安装与使用 | 已完成并按官方文档核验 | 2026-08 |
 | 03 | Hermes Agent 基础 | 已完成并按官方文档核验 | 2026-08 |
 | 04 | Pi / OMP / herdr 工作流 | 已完成并按本机环境核验 | 2026-08 |
-| 05 | Agent 记忆系统 | 规划中 | TBD |
+| 05 | Agent 记忆系统 | 已完成并按本机环境核验（全链路 LLM 验证待补） | 2026-08 |
 | 06 | 代码知识图谱与 MCP 实测 | 规划中 | TBD |
 | 07 | Agent 基础设施选型总览 | 规划中 | TBD |
 
