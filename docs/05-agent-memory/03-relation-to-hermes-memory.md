@@ -99,7 +99,7 @@ cp .env.example .env
 
 坑（核验于 2026-08）：
 
-- ⚠️ **`x-task-id` 当前版本必填**，否则 session bypass，记忆注入/回流不生效；`x-conversation-id` 需静态配置、开新对话要手动更换。
+- ⚠️ **`x-task-id` 当前版本必填**，否则 session bypass，记忆注入/回流不生效（本机实测复现：不带它连发 5 轮对话，proxy 一次 L0 都不写入；带上后全链路立即跑通）；`x-conversation-id` 需静态配置、开新对话要手动更换。
 - ⚠️ 部分客户端 tool call 后续请求不携带 headers，会导致那几轮跳过注入。
 - ⚠️ `MEMORY_CORE_GATEWAY_API_KEY` 官方 README 表格写默认 `local`，但当前脚本 core 侧默认**留空**，且**设非空会让 proxy 鉴权失败**（上游已知不兼容）。本地体验保持留空即可；要暴露到公网前，先等官方修复 proxy auth 并重新核验。
 - 首会话会弹 Team→Agent→Task 三级选择表单；选择项为空说明还没在面板建 Team/Agent（业务用户要在其团队下建 Agent）。

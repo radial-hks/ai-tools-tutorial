@@ -197,7 +197,7 @@ MEMORY_CORE_GATEWAY_API_KEY 非空 —— proxy 的 sessionInit/auth 目前会�
 
 - 部署层最重（三容器 + 两组 LLM 参数），但一条 `start-all.sh` 就能起，面板功能完整。
 - beta 版有脚本 bug 和文档矛盾，都在上面记录并修复/绕过了。
-- 记忆链路的完整验证需要真实 LLM Key（见文末[待补实测](#待补实测全链路验证)）。
+- 记忆链路需真实 LLM Key，全链路实测结果见文末「全链路实测」。
 
 ---
 
@@ -259,7 +259,7 @@ ServiceException: (500) Internal Server Error
 
 - 服务本身启动顺滑（内嵌数据库 + 本地模型全自动），但"用起来"必须有真 LLM Key。
 - 客户端 SDK 与 README 示例漂移明显，编程同事接手时以运行时内省为准。
-- 完整 Retain / Recall / Reflect 闭环见[待补实测](#待补实测全链路验证)。
+- 完整 Retain / Recall / Reflect 闭环见文末「全链路实测」。
 
 ---
 
@@ -268,22 +268,56 @@ ServiceException: (500) Internal Server Error
 | 维度 | Mnemosyne | TencentDB Agent Memory | Hindsight |
 | --- | --- | --- | --- |
 | 无 LLM Key 能否跑通核心链路 | ✅ store/recall 全通 | ⚠️ 部署+API 通，记忆链路不通 | ⚠️ 服务+建库通，Retain 不通 |
+| 有 LLM Key 后的全链路 | ✅ sleep() 整合走远程 LLM | ✅ 对话 → L0 → L1 蒸馏 → 召回全通 | ✅ Retain / Recall / Reflect 闭环 |
 | 安装难度 | 最低（pip 一条） | 中（Docker 三件套 + .env） | 中（pip 一条，但首次下载多） |
-| 本机真实踩坑数 | 0（Python 3.14 无问题） | 3（脚本乱码 / 文档矛盾 / Key 依赖） | 2（API 漂移 / 30s 超时） |
-| Hermes 原生接入 | ✅ 插件装好、status 显示 available | 有插件与 Proxy 两条路（本次未实测到记忆链路） | 无原生插件（MCP/HTTP 通用接入） |
+| 本机真实踩坑数 | 0（Python 3.14 无问题） | 6（脚本乱码 / gateway key 文档矛盾 / Key 依赖 / x-task-id 必填 / L1 每 5 轮触发 / Task 接口字段） | 2（API 漂移 / 30s 超时） |
+| Hermes 原生接入 | ✅ 插件装好、status 显示 available | 有插件与 Proxy 两条路（Proxy 路全链路实测通过） | 无原生插件（MCP/HTTP 通用接入） |
 | Pi 原生接入 | ✅ 扩展安装成功 | 无（待核验） | 未列入官方清单（待核验） |
 
 一句话：**轻量个人用 Mnemosyne 最顺；团队中枢 TencentDB 部署可跑但 beta 味重；Hindsight 要配好 LLM 才能发挥"学习型"优势。**
 
 ---
 
-## 待补实测：全链路验证
+## 全链路实测（2026-08-14，真实 Key 补测）
 
-以下验证需要**真实的 OpenAI 兼容 LLM Key**（如 DeepSeek），技术负责人提供后可一键补测：
+用真实 DeepSeek Key（OpenAI 兼容）补测了三家的 LLM 依赖链路，全部通过：
 
-1. **TencentDB**：把 `.env` 里两组占位参数换成真值 → 重启 → 面板建 Team/Agent → 通过 proxy 跑一轮对话 → 面板查看 Chat Memory L0–L3 是否生成。
-2. **Hindsight**：把 `llm_api_key` 换真值 → `retain` 写入 → `recall` 检索 → `reflect` 推理 → `list_memories` 核对。
-3. **Mnemosyne**：`MNEMOSYNE_EMBEDDING_API_URL` 指远程 embedding 时验证"查询也外发"的隐私行为。
+### Hindsight：Retain / Recall / Reflect 闭环 ✅
+
+- `retain("User prefers Python for data analysis and dark mode UI")` → `success=True, items_count=1`，LLM 把一句话**拆成两个结构化事实**（`world` 类型，各带 "Involving: user"）；本次消耗 2930 in / 215 out tokens。
+- `recall("programming preferences")` → 两条事实双命中。
+- `reflect("What language should I recommend...")` → 输出 `"**Recommend Python.** The user's stated preference is Python for data analysis (noted on 2026-08-14). There is no evidence of any other language..."` —— 基于记忆与日期做推理，不是复读原文；消耗 10163 in / 577 out tokens。
+- `list_memories` → 4 条记忆单元。
+
+### TencentDB：对话 → L0 → L1 蒸馏 → 召回 全链路 ✅
+
+流程：API 建 Team / Agent / Task → 经 proxy（`/codebuddy/default/v1/chat/completions`，带 `x-team-id` / `x-agent-id` / `x-task-id` / `x-conversation-id`）连发 5 轮对话 → 验证结果：
+
+- proxy 日志出现 **5 次 `write-l0`**（原始对话落盘）；
+- 管道**每 5 轮对话触发一次 L1 提取**：`L1 complete: extracted=2, stored=2`，耗时约 2 秒（DeepSeek LLM 蒸馏）；
+- `POST /v3/atomic/search` 召回命中：
+
+```json
+{"id":"m_1786714257511_4370ef66","type":"instruction",
+ "content":"用户要求：教程测试项目的贴图默认导出 JPG 格式、质量 90",
+ "background":"我（AI）在和用户确认教程测试项目的贴图导出约定",
+ "task_id":"task-1rtje5e246","score":0.65}
+```
+
+两个**实测验证的坑**（已同步进第 3 章口径）：
+
+1. **`x-task-id` 必填是真实存在的**：不带它发了 5 轮对话，proxy 一次 `write-l0` 都没写；带上之后全链路立即跑通。
+2. **首会话返回选择表单**：首轮请求返回 `ask_followup_question` tool call（选 Agent）；客户端按 CodeBuddy 的 `multi_question_result` JSON 格式回写后，会话初始化完成、后续请求直达上游。L1 提取还有 `everyNConversations=5 / l1IdleTimeout=600s` 的触发节奏——**刚聊完一两句就查记忆会查到空**，这是设计行为不是故障。
+
+### Mnemosyne：远程 LLM 整合 ✅（原计划项调整说明）
+
+原计划验证"远程 embedding 时查询也外发"，但 DeepSeek 不提供 embedding API，该项**需要 embedding 供应商的 Key 才能测**，留待后续。改为验证同等重要的远程 LLM 整合：
+
+- 设置 `MNEMOSYNE_LLM_BASE_URL=https://api.deepseek.com/v1` + `MNEMOSYNE_LLM_API_KEY` + `MNEMOSYNE_LLM_MODEL=deepseek-chat`；
+- 写入两条记忆后跑 `sleep(force=True)`：`{'status':'consolidated','items_consolidated':2,'summaries_created':1,'llm_used':1,'method':'llm'}` —— 走了远程 LLM 蒸馏，未触发本地 GGUF 下载（`method: llm` 而非本地回退）；
+- 召回时还出现了 `MODEL_REFRESH_PROPOSAL`（系统根据记忆提议建立"项目导出设置"的长期模型）——Mnemosyne 的记忆整合不只是摘要，还会沉淀画像。
+
+> 🔐 测试 Key 仅用于本机验证，未写入仓库任何文件；补测完成后已从临时脚本中清除。
 
 ---
 
