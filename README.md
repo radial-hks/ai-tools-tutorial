@@ -53,6 +53,15 @@ ai-tools-tutorial/
 │       ├── 03-relation-to-hermes-memory.md
 │       ├── 04-privacy-and-deployment.md
 │       └── appendix-hands-on.md
+│   └── 06-dsh/
+│       ├── README.md
+│       ├── 01-what-is-dsh.md
+│       ├── 02-installation.md
+│       ├── 03-web-gui.md
+│       ├── 04-agent-presets.md
+│       ├── 05-cordis-compositions.md
+│       ├── 06-dynamic-plugins.md
+│       └── 07-cooperation-and-selection.md
 ├── assets/
 └── templates/
 ```
@@ -117,6 +126,19 @@ ai-tools-tutorial/
 | [隐私与部署权衡](docs/05-agent-memory/04-privacy-and-deployment.md) | local-first vs 云端、成本构成、隐私红线与团队落地路线 |
 | [本机实测记录](docs/05-agent-memory/appendix-hands-on.md) | 三家系统真实安装命令、输出、踩坑与回退清单 |
 
+## 第 6 期：DeepSeek Harness（DSH）团队参考手册（2026-08）
+
+| 文档 | 内容 |
+| ------ | ------ |
+| [本期首页](docs/06-dsh/README.md) | 任务入口、阅读建议、官方基线与发布提示 |
+| [DSH 是什么](docs/06-dsh/01-what-is-dsh.md) | 产品定位、核心概念（Profile / Cordis / Agent Preset）、三种入口模式、与现有工具差异 |
+| [安装 DSH](docs/06-dsh/02-installation.md) | 前置条件、npm 安装、配置模型、首次启动、验证与排错 |
+| [Web GUI 使用](docs/06-dsh/03-web-gui.md) | 界面布局、会话管理、消息交互、快捷键、设置 |
+| [Agent Preset（模式）](docs/06-dsh/04-agent-presets.md) | 四种 shipped preset（standard / cordis / code / minimal）能力对比、选型、自定义 preset |
+| [Cordis 组合系统](docs/06-dsh/05-cordis-compositions.md) | Host 平面 vs Agent Preset 平面、plugin row、profile patch 层叠、isolate realm |
+| [动态插件](docs/06-dsh/06-dynamic-plugins.md) | 动态插件生命周期（define → run → update → stop → undefine）、Host/Client 双端 |
+| [工具协作与选型](docs/06-dsh/07-cooperation-and-selection.md) | 六件套协作全景、选型决策表、学习路径建议 |
+
 ## 后续规划
 
 | 期次 | 主题 | 状态 | 预计 |
@@ -126,7 +148,7 @@ ai-tools-tutorial/
 | 03 | Hermes Agent 基础 | 已完成并按官方文档核验 | 2026-08 |
 | 04 | Pi / OMP / herdr 工作流 | 已完成并按本机环境核验 | 2026-08 |
 | 05 | Agent 记忆系统 | 已完成并按本机环境核验（含全链路 LLM 实测） | 2026-08 |
-| 06 | 代码知识图谱与 MCP 实测 | 规划中 | TBD |
+| 06 | DeepSeek Harness（DSH） | 已完成并按本机环境核验 | 2026-08 |
 | 07 | Agent 基础设施选型总览 | 规划中 | TBD |
 
 > 第 5–7 期的正式规划见 [proposals/2026-08-12-后续期次扩展提案.md](proposals/2026-08-12-后续期次扩展提案.md)。
