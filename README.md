@@ -62,6 +62,13 @@ ai-tools-tutorial/
 │       ├── 05-cordis-compositions.md
 │       ├── 06-dynamic-plugins.md
 │       └── 07-cooperation-and-selection.md
+│   └── 07-matt-pocock/
+│       ├── README.md
+│       ├── 01-matt-pocock-and-ecosystem.md
+│       ├── 02-skills-engineering.md
+│       ├── 03-scenarios-workflows.md
+│       ├── 04-dictionary-and-other-tools.md
+│       └── 05-team-adoption.md
 ├── assets/
 └── templates/
 ```
@@ -139,6 +146,17 @@ ai-tools-tutorial/
 | [动态插件](docs/06-dsh/06-dynamic-plugins.md) | 动态插件生命周期（define → run → update → stop → undefine）、Host/Client 双端 |
 | [工具协作与选型](docs/06-dsh/07-cooperation-and-selection.md) | 六件套协作全景、选型决策表、学习路径建议 |
 
+## 第 7 期：Matt Pocock GitHub 工程技能生态（2026-08）
+
+| 文档 | 内容 |
+| ------ | ------ |
+| [本期首页](docs/07-matt-pocock/README.md) | 任务入口、阅读建议、官方基线与发布提示 |
+| [Matt Pocock 与 GitHub 生态](docs/07-matt-pocock/01-matt-pocock-and-ecosystem.md) | 他是谁、GitHub 仓库全景四层图、为什么值得关注、与前 6 期教程的关系 |
+| [Skills 仓库深度解析](docs/07-matt-pocock/02-skills-engineering.md) | 22 个 Agent Skill 完整分类（需求规划 / 实现测试 / 质量审查 / 设计架构 / 辅助操作）+ 快速查找表 |
+| [场景实战：从想法到交付](docs/07-matt-pocock/03-scenarios-workflows.md) | 四个端到端场景（修 Bug / 做新功能 / 改架构 / 接手老项目）+ 通用工作流模板 |
+| [AI Coding Dictionary 与配套工具](docs/07-matt-pocock/04-dictionary-and-other-tools.md) | 60+ 术语词典、Sandcastle 沙箱编排、Evalite LLM 评测、辅助仓库 |
+| [团队落地指南](docs/07-matt-pocock/05-team-adoption.md) | 适用判断、三种安装路径对比、与 Copilot/Hermes/Pi/DSH 配合、三步推广节奏 |
+
 ## 后续规划
 
 | 期次 | 主题 | 状态 | 预计 |
@@ -149,7 +167,7 @@ ai-tools-tutorial/
 | 04 | Pi / OMP / herdr 工作流 | 已完成并按本机环境核验 | 2026-08 |
 | 05 | Agent 记忆系统 | 已完成并按本机环境核验（含全链路 LLM 实测） | 2026-08 |
 | 06 | DeepSeek Harness（DSH） | 已完成并按本机环境核验 | 2026-08 |
-| 07 | Agent 基础设施选型总览 | 规划中 | TBD |
+| 07 | Matt Pocock GitHub 工程技能生态 | 已完成并按 GitHub 公开仓库核验 | 2026-08 |
 
 > 第 5–7 期的正式规划见 [proposals/2026-08-12-后续期次扩展提案.md](proposals/2026-08-12-后续期次扩展提案.md)。
 
