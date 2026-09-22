@@ -4,7 +4,7 @@
 
 **核验基线：** 内容按本机实际环境与官方文档核验于 2026-09（OpenViking v0.4.x、pi-herdr-agents v2.0.x、pi + herdr）。OpenViking 与 pi-herdr-agents 迭代很快，发布前建议技术负责人复核版本号与团队部署形态。
 
-**一句话定位：** 本期收官实战章。把前四章拼成一条完整流水线：**OpenViking（记忆）+ Pi（编排）+ herdr（并行执行）** 各司其职，串成「记忆 → 编排 → 执行 → 沉淀」的闭环——让多个 agent 共享同一份长期记忆，把一个任务拆给多个子代理并行干完，再把新经验存回记忆，下次自动召回。
+**一句话定位：** 本期核心实战章。把前几章拼成一条完整流水线：**OpenViking（记忆）+ Pi（编排）+ herdr（并行执行）** 各司其职，串成「记忆 → 编排 → 执行 → 沉淀」的闭环——让多个 agent 共享同一份长期记忆，把一个任务拆给多个子代理并行干完，再把新经验存回记忆，下次自动召回。
 
 **标记约定：** 沿用全手册的符号：
 
@@ -167,4 +167,4 @@ git rev-parse HEAD
 
 ---
 
-← 上一节：[Pi + herdr 多 Agent 编排](03-pi-herdr-multiagent.md) ｜ 返回主页：[AI 工具团队参考手册](../../README.md)
+← 上一节：[Pi + herdr 多 Agent 编排](03-pi-herdr-multiagent.md) ｜ 下一节：[OpenViking × Copilot](05-openviking-copilot.md) ｜ 返回主页：[AI 工具团队参考手册](../../README.md)

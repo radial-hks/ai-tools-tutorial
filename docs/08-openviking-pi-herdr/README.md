@@ -28,6 +28,7 @@
 | 装好 OpenViking 服务并把 Pi 接上记忆扩展 | [02-installation.md](02-installation.md) |
 | 用 Pi + herdr 做多 Agent 编排（派子代理、worktree、并行） | [03-pi-herdr-multiagent.md](03-pi-herdr-multiagent.md) |
 | 跟完三件套端到端闭环 + 两个团队场景实例 | [04-combo-workflow.md](04-combo-workflow.md) |
+| 主力用 Copilot，想给自己的 Copilot 装上 OpenViking 记忆 | [05-openviking-copilot.md](05-openviking-copilot.md) |
 
 ## 章节导航（估算阅读时间）
 
@@ -37,12 +38,14 @@
 | 2 | [安装 OpenViking 并接入 Pi](02-installation.md) | 部署服务、安装 pi 扩展、配置凭据与 peer、验证召回 | 技术人员 | 15 分钟 |
 | 3 | [Pi + herdr 多 Agent 编排](03-pi-herdr-multiagent.md) | `subagent` / `/subagent` / `/worktree`、角色、并行与受管 worktree | 技术人员 | 12 分钟 |
 | 4 | [三件套组合工作流](04-combo-workflow.md) | 端到端闭环 + 多视角调研 / 批量文档两个场景实例 | 全员 | 10 分钟 |
+| 5 | [OpenViking × Copilot](05-openviking-copilot.md) | openviking-copilot 插件安装配置、已知坑，主力 Copilot 同事的记忆路线 | Copilot 用户 + 技术人员 | 10 分钟 |
 
 ## 阅读建议
 
 - **只想了解「有什么、要不要用」**：读 [第 1 章](01-what-is-openviking.md) + [第 4 章](04-combo-workflow.md) 的「三件套分工」和「两个团队场景」，共约 15 分钟。
 - **想直接上手跑通闭环**：按顺序读 [第 2 章](02-installation.md) → [第 3 章](03-pi-herdr-multiagent.md) → [第 4 章](04-combo-workflow.md)。
 - **已经在用第 4 期的 Pi + herdr**：跳过第 1 章，直接看 [第 3 章](03-pi-herdr-multiagent.md) 的编排用法，再回 [第 4 章](04-combo-workflow.md) 看闭环。
+- **日常主力是 Copilot（公司内部大多数同事）**：读 [第 1 章](01-what-is-openviking.md) 搞懂记忆库，再直接看 [第 5 章](05-openviking-copilot.md) 装插件；第 2–4 章的 Pi 路线可作为以后进阶的参考。
 - **之前没接触过 Pi / 记忆系统**：先回顾 [第 4 期](../../docs/04-pi/README.md) 和 [第 5 期](../../docs/05-agent-memory/README.md)，再回本期。
 
 ## 官方基线参考

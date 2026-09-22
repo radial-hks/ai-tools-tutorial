@@ -157,6 +157,17 @@ ai-tools-tutorial/
 | [AI Coding Dictionary 与配套工具](docs/07-matt-pocock/04-dictionary-and-other-tools.md) | 60+ 术语词典、Sandcastle 沙箱编排、Evalite LLM 评测、辅助仓库 |
 | [团队落地指南](docs/07-matt-pocock/05-team-adoption.md) | 适用判断、三种安装路径对比、与 Copilot/Hermes/Pi/DSH 配合、三步推广节奏 |
 
+## 第 8 期：OpenViking + Pi + herdr 多 Agent 组合（2026-09）
+
+| 文档 | 内容 |
+| ------ | ------ |
+| [本期首页](docs/08-openviking-pi-herdr/README.md) | 任务入口、三件套分工、阅读建议、官方基线 |
+| [OpenViking 是什么](docs/08-openviking-pi-herdr/01-what-is-openviking.md) | 定位、核心概念（viking:// 记忆库、L0–L2 分层、会话捕获、Peer）、与第 5 期三家记忆系统的关系 |
+| [安装 OpenViking 并接入 Pi](docs/08-openviking-pi-herdr/02-installation.md) | 服务端部署、pi 扩展安装、viking_* 工具集、验证与排错 |
+| [Pi + herdr 多 Agent 编排](docs/08-openviking-pi-herdr/03-pi-herdr-multiagent.md) | pi-herdr-agents、普通 pane vs 受管 worktree、非阻塞派发与回收、模型路由环境一致性 |
+| [三件套组合工作流](docs/08-openviking-pi-herdr/04-combo-workflow.md) | 「记忆 → 编排 → 执行 → 沉淀」六步闭环 + 多视角调研 / 批量文档两个场景实例 |
+| [OpenViking × Copilot](docs/08-openviking-pi-herdr/05-openviking-copilot.md) | openviking-copilot 插件（公司内部维护）安装配置、已知坑，主力 Copilot 同事的记忆路线 |
+
 ## 后续规划
 
 | 期次 | 主题 | 状态 | 预计 |
@@ -168,6 +179,7 @@ ai-tools-tutorial/
 | 05 | Agent 记忆系统 | 已完成并按本机环境核验（含全链路 LLM 实测） | 2026-08 |
 | 06 | DeepSeek Harness（DSH） | 已完成并按本机环境核验 | 2026-08 |
 | 07 | Matt Pocock GitHub 工程技能生态 | 已完成并按 GitHub 公开仓库核验 | 2026-08 |
+| 08 | OpenViking + Pi + herdr 多 Agent 组合 | 已完成并按本机环境与官方文档核验 | 2026-09 |
 
 > 第 5–7 期的正式规划见 [proposals/2026-08-12-后续期次扩展提案.md](proposals/2026-08-12-后续期次扩展提案.md)。
 
