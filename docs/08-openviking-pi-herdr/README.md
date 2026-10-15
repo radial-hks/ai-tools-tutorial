@@ -39,6 +39,7 @@
 | 3 | [Pi + herdr 多 Agent 编排](03-pi-herdr-multiagent.md) | `subagent` / `/subagent` / `/worktree`、角色、并行与受管 worktree | 技术人员 | 12 分钟 |
 | 4 | [三件套组合工作流](04-combo-workflow.md) | 端到端闭环 + 多视角调研 / 批量文档两个场景实例 | 全员 | 10 分钟 |
 | 5 | [OpenViking × Copilot](05-openviking-copilot.md) | openviking-copilot 插件安装配置、已知坑，主力 Copilot 同事的记忆路线 | Copilot 用户 + 技术人员 | 10 分钟 |
+| 附录 | [会前小调查与讲者手册](appendix-pre-survey.md) | 分享前发群的 2 分钟问卷、结果分流逻辑、现场首试配方 | 讲者 | 5 分钟 |
 
 ## 阅读建议
 
@@ -50,7 +51,7 @@
 
 ## 官方基线参考
 
-- OpenViking：<https://github.com/volcengine/OpenViking> ｜ 官方文档 <https://docs.openviking.ai/>（中文 <https://docs.openviking.ai/zh/getting-started/01-introduction>）
+- OpenViking：<https://github.com/volcengine/OpenViking> ｜ 官方文档 <https://docs.openviking.ai/>（中文 <https://docs.openviking.ai/zh/getting-started/01-introduction>）｜ 选型博客 <https://blog.openviking.ai/post/should-you-use-openviking/> ｜ 官方直播回顾 <https://blog.openviking.ai/post/openviking-agent-harness/>
 - Pi：<https://github.com/earendil-works/pi> ｜ npm 包 <https://www.npmjs.com/package/@earendil-works/pi-coding-agent>
 - herdr：<https://herdr.dev>
 - pi-herdr-agents：<https://github.com/giuseppecrj/pi-herdr-agents>

@@ -167,6 +167,7 @@ ai-tools-tutorial/
 | [Pi + herdr 多 Agent 编排](docs/08-openviking-pi-herdr/03-pi-herdr-multiagent.md) | pi-herdr-agents、普通 pane vs 受管 worktree、非阻塞派发与回收、模型路由环境一致性 |
 | [三件套组合工作流](docs/08-openviking-pi-herdr/04-combo-workflow.md) | 「记忆 → 编排 → 执行 → 沉淀」六步闭环 + 多视角调研 / 批量文档两个场景实例 |
 | [OpenViking × Copilot](docs/08-openviking-pi-herdr/05-openviking-copilot.md) | openviking-copilot 插件（公司内部维护）安装配置、已知坑，主力 Copilot 同事的记忆路线 |
+| [会前小调查与讲者手册](docs/08-openviking-pi-herdr/appendix-pre-survey.md) | 分享前发群的 2 分钟问卷、结果分流逻辑、现场首试配方（源自官方博客与直播） |
 
 ## 后续规划
 
