@@ -4,7 +4,7 @@
 
 带你在本机把两件事装好：一是跑起 **OpenViking 服务端**，二是给 **Pi** 装上官方扩展、让 Pi 具备跨会话记忆。全程以官方文档为准，命令都是真实可复制的。
 
-> ⚠️ **本机版本事实（供参考）**：pi `0.87.0`、herdr `0.9.1`。OpenViking 及其 Pi 集成都是快速迭代项目，下文涉及的版本与命令核验于 **2026-09**，动手前请以官方最新文档为准。
+> ⚠️ **本机版本事实（供参考）**：pi `1.2.0`、herdr `0.9.3`、OpenViking 服务端 `v0.5.0`。OpenViking 及其 Pi 集成都是快速迭代项目，下文涉及的版本与命令核验于 **2026-10**（Windows 原生环境），动手前请以官方最新文档为准。
 
 ## 整体思路：三步
 
@@ -135,9 +135,20 @@ bash <(curl -fsSL https://ovrelease.tos-cn-beijing.volces.com/memory-plugin-shar
 git clone https://github.com/volcengine/OpenViking.git
 cd OpenViking
 mkdir -p ~/.pi/agent/extensions
-cp -r examples/pi-coding-agent-extension ~/.pi/agent/extensions/openviking
+cp -rL examples/pi-coding-agent-extension ~/.pi/agent/extensions/openviking
 pi install ~/.pi/agent/extensions/openviking
 ```
+
+### Windows 原生安装注意（2026-10 实测）
+
+上面两条安装路径都假定你在 bash 环境。Windows 原生跑 Pi 时有四个坑，都是实测踩过的：
+
+| 坑 | 说明 | 正确做法 |
+| --- | --- | --- |
+| `bash <(curl ...)` 不可用 | 进程替换是 bash 语法，PowerShell 没有 | 先把 `install.sh` 下载下来再执行，或直接走上面的「手动复制安装」 |
+| 来源是 WSL 里的 symlink | WSL 侧 `~/.pi/agent/extensions/openviking` 可能本身是指向源码仓库的软链 | **`cp -rL` 解引用**复制真实内容；`cp -a` 只会复制出悬空链接 |
+| 凭据重复配置 | Windows 的 `%USERPROFILE%\.openviking\ovcli.conf` 与 WSL 侧本来就是同一把 key | 直接复用，无需覆盖；不确定时先 sha256 比对 |
+| omp 不读 pi 的扩展目录 | omp 是 pi 内核独立发行版，自动发现根目录是 `~/.omp/agent/extensions/` | 在该目录下建指向 pi 侧真身目录的 **junction**（`New-Item -ItemType Junction`），保持单一真身 |
 
 ### 配置
 
@@ -180,7 +191,7 @@ node ~/.pi/agent/extensions/openviking/scripts/setup.mjs
 - **自动捕获（Capture）**：每个 turn（每一轮对话）把用户与助手消息（含工具调用）捕获进 Session，累计 Token 超过阈值后提交；
 - **上下文接管（Context Takeover）**（默认开启）：提交后，用归档概览替换已提交的本地历史，模型上下文里只保留近期 live tail——长会话不再撑爆上下文窗口。
 
-> ⚠️ **核验时间：2026-09**。上下文接管属于快速迭代功能，默认开启且 fail-open（写不进去会回退到保留完整历史），具体阈值以 `config.json` 和官方文档为准。
+> ⚠️ **核验时间：2026-10**。上下文接管属于快速迭代功能，默认开启且 fail-open（写不进去会回退到保留完整历史），具体阈值以 `config.json` 和官方文档为准。
 
 ## 验证安装生效
 

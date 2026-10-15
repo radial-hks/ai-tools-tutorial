@@ -2,7 +2,7 @@
 
 **受众：** 技术人员建议精读全文；无编程基础的美术、建模、TA 同事重点读第 1 章（了解"有什么"）和第 4 章前半段（场景速查），了解"这套组合能干什么、什么时候用"即可。
 
-**核验基线：** 内容按本机实际环境与官方文档核验于 2026-09（OpenViking v0.4.x、pi-herdr-agents v2.0.x、pi + herdr）。三者迭代都很快，发布前建议技术负责人复核版本号与团队部署形态。
+**核验基线：** 内容按本机实际环境与官方文档核验于 2026-10（OpenViking v0.5.0、pi-herdr-agents v3.2.1、pi 1.2.0 + herdr 0.9.3，Windows 原生环境）。三者迭代都很快，发布前建议技术负责人复核版本号与团队部署形态。
 
 **一句话定位：** 前七期讲了"用工具写代码、复用流程、执行任务、多 Agent 协作、长期记忆"。本期把这套拼图合起来：用 **OpenViking** 给多个 agent 装上同一份跨会话长期记忆，用 **Pi** 做父会话编排，用 **herdr** 承载并行子代理，串成一条「记忆 → 编排 → 执行 → 沉淀」的完整闭环。
 
@@ -55,7 +55,7 @@
 - herdr：<https://herdr.dev>
 - pi-herdr-agents：<https://github.com/giuseppecrj/pi-herdr-agents>
 
-> ⚠️ **内部发布提示：** 三者迭代都很快（核验期间 OpenViking 处于 v0.4.x、pi-herdr-agents v2.0.x）。面向同事发布前，请技术负责人复核版本号、模型路由与团队部署形态，并把团队专属配置补充到 [第 2 章](02-installation.md) 和 [第 3 章](03-pi-herdr-multiagent.md)。
+> ⚠️ **内部发布提示：** 三者迭代都很快（核验期间 OpenViking 处于 v0.5.0、pi-herdr-agents v3.2.1，后者 3.0 起不再内置角色、改由 pi-herdr-roles 角色包提供）。面向同事发布前，请技术负责人复核版本号、模型路由与团队部署形态，并把团队专属配置补充到 [第 2 章](02-installation.md) 和 [第 3 章](03-pi-herdr-multiagent.md)。
 
 ---
 

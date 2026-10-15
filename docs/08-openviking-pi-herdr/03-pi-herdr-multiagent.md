@@ -12,7 +12,7 @@
 
 ## 它是什么
 
-pi-herdr-agents（npm 包名即 `pi-herdr-agents`）装在 Pi 里后，给父会话新增一套工具和命令：`subagent`（派发子代理）、`subagent_interrupt`（打断）、`subagent_send` / `subagent_stop`（给常驻专员续活/停机）、`worktree_list` / `worktree_remove`（受管 worktree 清单/清理）等。核心是前两个——把活派出去、把结果收回来。
+pi-herdr-agents（npm 包名即 `pi-herdr-agents`）装在 Pi 里后，给父会话新增一套工具和命令：`subagent`（派发子代理）、`subagent_interrupt`（打断）、`subagent_cancel`（取消一个正在跑的普通子代理，取消后不再重试/恢复）、`subagent_send` / `subagent_stop`（给常驻专员续活/停机）、`worktree_list` / `worktree_remove`（受管 worktree 清单/清理）等。核心是前两个——把活派出去、把结果收回来。
 
 它和上一期 herdr 的区别在于**自动化程度**：
 
@@ -115,6 +115,8 @@ pi install npm:pi-herdr-agents
 
 之后在 herdr 里 `/reload` 一下。装任何 Pi 包前先看一眼包源码。
 
+> ⚠️ **从 2.x 升到 3.x 的注意**：`pi-herdr-agents` 3.0 起定位改为「执行宿主」，**不再随包内置任何角色**——2.x 的 scout / worker / reviewer / planner 等七个内置角色、`/plan` 命令和 orchestrate 技能全部拆到可选角色包。想要这些角色，装官方 `pi-herdr-roles` 包（含 scout / planner / worker / reviewer / adversarial-reviewer / visual-tester 六个通用角色、`/plan` 和 `/skill:orchestrate`），或把角色定义复制进项目的 `.pi/agents/` 自行维护。对 2.x 升级的完整迁移说明见官方 3.0.0 release notes。
+
 ### 自然语言派发（最省事）
 
 直接说人话，让父会话自己拆、自己派：
@@ -125,30 +127,32 @@ pi install npm:pi-herdr-agents
 
 ### /subagent 命令（指定角色）
 
-按名字直接派一个内置角色，`/subagent list` 列出当前可用角色：
+按名字直接派一个角色，`/subagent list` 列出当前可用角色：
 
 ```text
 /subagent scout 分析认证模块，报告相关文件和风险
 /subagent worker 修复登录页的 off-by-one 错误并跑测试
 ```
 
-内置的常用角色（agent role）有：**scout**（侦察/梳理）、**worker**（实现边界任务）、**reviewer**（审查）、**planner**（规划，交互式）。角色是扩展点，可在项目 `.pi/agents/` 或全局 `~/.pi/agent/agents/` 里自定义。
+常用角色（agent role）有：**scout**（侦察/梳理）、**worker**（实现边界任务）、**reviewer**（审查）、**planner**（规划，交互式）。
+
+> ⚠️ 3.0 起角色不再随主包内置：主包只提供派发/回收机制（执行宿主），上面这些角色来自 `pi-herdr-roles` 角色包或项目自定义。角色是扩展点，可在项目 `.pi/agents/` 或全局 `~/.pi/agent/agents/` 里自定义。
 
 ### 相关技能
 
-两个技能（skill）把「典型派发」固化成可复用的配方：
+把「典型派发」固化成可复用的配方：
 
-- **orchestrate**：有界审查——父会话先物化证据（仓库、base/head SHA、diff），并行派多个只读 reviewer，父会话综合结论。适合代码评审、PR 评审。
-- **deep-research-campaign**：多视角深度调研——父会话拆问题清单，并行派多个 research-scout 取证，可选 analyst 深挖、synth 交叉验证，产出中文结构化报告。适合重大架构决策、技术选型。
+- **pi-herdr-agents（主包自带）**：操作指南技能——派发、监督、打断、取消、恢复、worktree、常驻专员、模型路由的完整操作说明，子代理按需加载。
+- **orchestrate**（随 `pi-herdr-roles` 角色包提供）：有界审查——父会话先物化证据（仓库、base/head SHA、diff），并行派多个只读 reviewer，父会话综合结论。适合代码评审、PR 评审。
 
-> 💡 这些技能本质都是「父会话协调 + 子代理并行取证 + 父会话综合」，只是把每一步的边界和产物契约写得更严。团队内部用自然语言派发即可，遇到评审/调研再套技能。
+> 💡 这些技能本质都是「父会话协调 + 子代理并行取证 + 父会话综合」，只是把每一步的边界和产物契约写得更严。团队内部用自然语言派发即可，遇到评审再套技能。3.0 之前主包还曾内置 deep-research-campaign（多视角深度调研）技能，现已随角色拆包移除，需要深度调研工作流时自行定制或关注角色包生态。
 
 ## 模型路由与执行环境一致性
 
 派发前最重要的一条检查：**确认子代理用的模型跑在哪个环境，和它要读/写的文件在不在同一台机器上。** 模型和文件系统不一致，会出现「模型看着正常，其实根本看不到目标文件」的隐性失败。
 
 - 需要**读本机源码、写本机文件**的子代理 → 用**本机 herdr pane 模型**（在本机跑的模型）。
-- 某些模型实际跑在**远程运行时（如 NAS 上的 Hermes）**，其工作目录是那台机器的（例如 `cwd=/root`），**看不到本机（Mac）的文件系统** → 不要派它去读/写本机文件。
+- 某些模型实际跑在**远程运行时（如 NAS 上的 Hermes）**，其工作目录是那台机器的（例如 `cwd=/root`），**看不到本机（Windows）的文件系统** → 不要派它去读/写本机文件。
 - 这类远程模型只用于「远程那台机器本机可达、不需要本机文件系统」的任务。
 
 > ⚠️ 一句话口诀：**派活前先对一遍「模型在哪跑」和「文件在哪存」，两者必须一致。** 不确定时，用本机模型做本机文件任务最稳。
@@ -220,11 +224,11 @@ git -C <worktree-path> diff <base-sha>...HEAD
 
 以下为本机核验的版本，供参考；这类工具迭代很快，快速变化的功能（模型路由、面板布局、监督机制、清理规则等）以本机安装版本为准：
 
-- Pi：0.87.0
-- herdr：0.9.1
-- pi-herdr-agents：2.0.3
+- Pi：1.2.0
+- herdr：0.9.3
+- pi-herdr-agents：3.2.1（另装 pi-herdr-roles 角色包提供通用角色）
 
-核验时间：2026-09。
+核验时间：2026-10（Windows 原生环境）。
 
 ## 参考
 
